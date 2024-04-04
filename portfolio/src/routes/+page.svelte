@@ -4,8 +4,9 @@ import PROJECTS_DATA from "$lib/data";
 import CARDS from "$lib/components/component_cards.svelte";
 </script>
 
-
-<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis incidunt totam minus nam nobis quasi voluptatem illum delectus ab dicta vero numquam officia libero, ut perspiciatis laudantium tempora qui asperiores.</p>
+<div class="title-content">
+	<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis incidunt totam minus nam nobis quasi voluptatem illum delectus ab dicta vero numquam officia libero, ut perspiciatis laudantium tempora qui asperiores.</p>
+</div>
 
 {#await PROJECTS_DATA}
 	<p>loading...</p>

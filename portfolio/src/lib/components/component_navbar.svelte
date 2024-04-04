@@ -9,6 +9,7 @@
     align-items: center;
     width: 100%;
     border-bottom: 1px solid black;
+    padding-bottom: 0.75rem;
   }
 
   .title {
@@ -26,5 +27,5 @@
 
 <div class="navbar">
   <div class="title">{title}</div>
-  <div class="button" >About</div>
+  <div class="button">About</div>
 </div>

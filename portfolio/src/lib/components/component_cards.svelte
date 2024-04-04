@@ -1,11 +1,11 @@
 <script>
+// @ts-nocheck
 
-
-     export let project;
+    export let project;
 
     let cover_image;
     if (project.images[0] !== ""){
-        cover_image = '/images/' + project.images[0];
+        cover_image = '/images/' +  project.image_folder + "/" + project.images[0];
     }
     // portfolio\src\lib\images\FBIP\FBIP_1.jpg
     console.log( project.name , cover_image )
@@ -19,9 +19,10 @@
 </script>
 
 {#if cover_image}
-    <div class="card" style="background-image: url('{cover_image}');" on:click={handleClick} >
+    <div class="card" style="background-image: url('{cover_image}');" on:click={handleClick} on:keydown={handleClick} >
         <p>{project.name}</p>
     </div>
+    
 {:else}
     <div class="card">
         <p>{project.name}</p>
@@ -31,8 +32,8 @@
 
 <style>
     .card {
-        width: 200px;
-        height: 200px;
+        width: 225px;
+        height: 225px;
         background-color: #f0f0f0;
         border-radius: 8px;
         display: flex;
