@@ -16,7 +16,6 @@
 
     // Carousel Buttons
     const handleNextClick = () => { carousel.goToNext()}
-
     const handlePrevClick = () => { carousel.goToPrev() }
 
 </script>

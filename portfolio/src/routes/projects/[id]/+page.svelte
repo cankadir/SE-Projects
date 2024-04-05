@@ -11,8 +11,6 @@
     PROJECTS_DATA.then(data => {
         filtered_data = data.filter(project => project.short_url === $page.params.id );
         filtered_data = filtered_data[0];
-
-        // console.log(filtered_data);
     });
 
 
@@ -48,9 +46,7 @@
 
 <style>
     .project-container{
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 2rem;
+        max-width: 1200px;
     }
 
     .project-title{
@@ -66,10 +62,6 @@
 
     .project-info > .title{
         font-weight: bold;
-    }
-
-    .project-images{
-        margin: 0 auto;
     }
 
 </style>

@@ -8,11 +8,10 @@
         cover_image = '/images/' +  project.image_folder + "/" + project.images[0];
     }
     // portfolio\src\lib\images\FBIP\FBIP_1.jpg
-    console.log( project.name , cover_image )
+    // console.log( project.name , cover_image )
 
     function handleClick(event) {
         // when div is clicked, navigate to the project page
-        console.log('clicked', project.name);
         window.location.href = '/projects/' + project.short_url;
     }
 
@@ -25,6 +24,7 @@
     
 {:else}
     <div class="card">
+        <!-- from p only on hover -->
         <p>{project.name}</p>
     </div>
 {/if}
@@ -32,9 +32,7 @@
 
 <style>
     .card {
-        width: 225px;
         height: 225px;
-        background-color: #f0f0f0;
         border-radius: 8px;
         display: flex;
         align-items: center;
@@ -44,6 +42,30 @@
         object-fit: cover;
         background-size: cover;
         background-position: center;
+        padding: 1rem;
+        box-sizing: border-box;
     }
+
+    .card:hover {
+        filter: opacity(0.6);
+        transition: linear 0.2s;
+    }
+
+    .card p {
+        display: none;
+        color: white;
+        font-size: 1.5em;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        pointer-events: none;
+    }
+
+    .card:hover p {
+        display: block;
+        transition: linear 0.2s;
+    }
+
+    
+
 </style>
 

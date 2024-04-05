@@ -10,7 +10,7 @@ const fetchData = async (url) => {
 
 let csv_data = fetchData(url);
 
-const PROJECTS_DATA = csv_data.then(data => {
+let PROJECTS_DATA = csv_data.then(data => {
   const rows = data.split('\n');
   const projects = rows.map(row => {
 
@@ -37,9 +37,9 @@ const PROJECTS_DATA = csv_data.then(data => {
   return projects;
 });
 
-// remove row if code is "code"
-PROJECTS_DATA.then(data => {
+PROJECTS_DATA = PROJECTS_DATA.then(data => {
   data.shift();
+  data = data.filter(project => project.code != 'x');
   return data;
 });
 

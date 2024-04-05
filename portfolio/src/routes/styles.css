@@ -10,10 +10,27 @@ body {
 	background-attachment: fixed;
 	font-family: 'Source Sans 3 Variable', sans-serif;
 	color : var( --text-color);
+	box-sizing: border-box;
 }
 
-.app{
-	padding: 2rem 1rem;
+
+.app {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 1.5rem;
+}
+
+main {
+	width:100%;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	padding: 0 1.5rem;
+	margin: 0 auto;
+	box-sizing: border-box;
 }
 
 h1,
@@ -36,10 +53,9 @@ a:hover {
 }
 
 .projects-grid {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	gap: 1.5rem;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: 1rem;
 }
 
 input,
@@ -68,8 +84,4 @@ button:focus:not(:focus-visible) {
 	position: absolute;
 	width: 1px;
 	white-space: nowrap;
-}
-
-.title-content{
-	padding: 2rem 0;
 }
