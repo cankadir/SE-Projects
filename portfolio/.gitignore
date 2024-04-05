@@ -1,6 +1,6 @@
 .DS_Store
+/static/images
 node_modules
-/build
 /.svelte-kit
 /package
 .env
