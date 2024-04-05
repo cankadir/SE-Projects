@@ -1,25 +1,13 @@
 <script>
 // @ts-nocheck
-
     export let project;
-
-    let cover_image;
-    if (project.images[0] !== ""){
-        cover_image = '/images/' +  project.image_folder + "/" + project.images[0];
-    }
-    // portfolio\src\lib\images\FBIP\FBIP_1.jpg
-    // console.log( project.name , cover_image )
-
-    function handleClick(event) {
-        // when div is clicked, navigate to the project page
-        window.location.href = '/projects/' + project.short_url;
-    }
 
 </script>
 
-{#if cover_image}
-    <div class="card" style="background-image: url('{cover_image}');" on:click={handleClick} on:keydown={handleClick} >
+{#if project.images[0] !== ""}
+    <div class="card" style="background-image: url('images/{project.image_folder}/{project.images[0]}');"  >
         <p>{project.name}</p>
+        <a id="tolink" href="projects/{project.short_url}"><span class="link"></span></a>
     </div>
     
 {:else}
@@ -31,7 +19,17 @@
 
 
 <style>
+    .link {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+
     .card {
+        position: relative;
         height: 225px;
         border-radius: 8px;
         display: flex;
@@ -64,8 +62,6 @@
         display: block;
         transition: linear 0.2s;
     }
-
-    
 
 </style>
 
