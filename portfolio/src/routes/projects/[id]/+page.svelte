@@ -2,6 +2,7 @@
 <script>
     import {page} from '$app/stores';
     import SplideCarousel from '$lib/components/component_slider.svelte'
+
     
     let filtered_data;
     

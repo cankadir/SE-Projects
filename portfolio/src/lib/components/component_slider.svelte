@@ -7,6 +7,9 @@
     
     import Carousel from 'svelte-carousel'
     import { browser } from '$app/environment';
+    
+    // base from paths
+    import { base } from '$app/paths';
 
     let carousel;
   
@@ -32,7 +35,7 @@
             <button class="prev-button" on:click={handlePrevClick}>&#10094;</button>
             <Carousel bind:this={carousel} arrows={false} itemsToShow={1} itemsToScroll={1} loop={true} >
                 {#each images as image}
-                    <img class='carousel-images' src="/images/{folder}/{image}" alt="project"/>    
+                    <img class='carousel-images' src="{base}/images/{folder}/{image}" alt="project"/>    
                 {/each}
             </Carousel>
             <button class="next-button" on:click={handleNextClick}>&#10095;</button>
