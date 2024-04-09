@@ -35,7 +35,7 @@
     .card {
         position: relative;
         height:auto;
-        aspect-ratio: 4/3;
+        aspect-ratio: 4/2.5;
         cursor: pointer;
         object-fit: cover;
         background-size: cover;

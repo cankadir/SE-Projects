@@ -1,8 +1,22 @@
 
 :root {
 	--text-color:#333;
-	--orange: #ff7f50;
-	--background-color: #ececec;
+	--orange: #FF8900;
+	--background-color: #f5f5f5;
+}
+
+@font-face {
+	font-family: 'Alright Sans Regular';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/AlrightSans-Regular-v3.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Alright Sans Bold';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/AlrightSans-Bold-v3.ttf') format('truetype');
 }
 
 body {
@@ -10,7 +24,8 @@ body {
 	min-height: 100vh;
 	margin: 0;
 	background-attachment: fixed;
-	font-family: 'Source Sans 3 Variable', sans-serif;
+	/* font-family: 'Source Sans 3 Variable', sans-serif; */
+	font-family: 'Alright Sans Regular', sans-serif;
 	color : var( --text-color);
 	box-sizing: border-box;
 }

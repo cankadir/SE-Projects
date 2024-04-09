@@ -38,6 +38,7 @@
   }
 
   #title-bold {
+    font-family: 'Alright Sans Bold', sans-serif;
     font-weight: bold;
     color: var(--orange)!important;
   }
