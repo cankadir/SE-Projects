@@ -6,7 +6,7 @@
 </script>
 
 <div class="app">
-	<Navbar title="Studio 2263" />
+	<Navbar />
 
 
 	<main>

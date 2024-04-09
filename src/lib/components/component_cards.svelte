@@ -7,19 +7,22 @@
 
 {#if project.images[0] !== ""}
     <div class="card" style="background-image: url('{base}/images/{project.image_folder}/{project.images[0]}');"  >
-        <p>{project.name}</p>
-        <a id="tolink" href="{base}/projects/{project.short_url}"><span class="link"></span></a>
+        <div class="tint">
+            <p>{project.name}</p>
+            <a id="tolink" href="{base}/projects/{project.short_url}"><span class="link"></span></a>
+        </div>
     </div>
     
 {:else}
     <div class="card">
-        <!-- from p only on hover -->
         <p>{project.name}</p>
     </div>
 {/if}
 
 
 <style>
+
+
     .link {
         position: absolute;
         width: 100%;
@@ -31,38 +34,52 @@
 
     .card {
         position: relative;
-        height: 225px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
+        height:auto;
+        aspect-ratio: 4/3;
         cursor: pointer;
         object-fit: cover;
         background-size: cover;
-        background-position: center;
-        padding: 1rem;
+        background-position: top center;
         box-sizing: border-box;
     }
 
-    .card:hover {
-        filter: opacity(0.6);
-        transition: linear 0.2s;
-    }
-
     .card p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
         display: none;
         color: white;
-        font-size: 1.5em;
+        font-size: 1.1em;
         font-weight: bold;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         pointer-events: none;
+        margin: auto;
     }
 
     .card:hover p {
         display: block;
         transition: linear 0.2s;
     }
+
+    .tint{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: var(--orange);
+        filter:opacity(0);
+        padding: 3rem;
+        box-sizing: border-box;
+    }
+
+    .tint:hover {
+        filter: opacity(0.85);
+        transition: linear 0.2s;
+    }
+
+
 
 </style>
 
