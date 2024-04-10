@@ -1,7 +1,8 @@
 
 
 <script >
-
+    // no type checking
+    // @ts-nocheck
     export let images;
     export let folder;
     
@@ -34,8 +35,10 @@
         {#if browser}
             <button class="prev-button" on:click={handlePrevClick}>&#10094;</button>
             <Carousel bind:this={carousel} arrows={false} itemsToShow={1} itemsToScroll={1} loop={true} >
-                {#each images as image}
-                    <img class='carousel-images' src="{base}/images/{folder}/{image}" alt="project"/>    
+                {#each images as image, index}
+                    {#if index >0 }
+                        <img class='carousel-images' src="{base}/images/{folder}/{image}" alt="project"/>
+                    {/if}
                 {/each}
             </Carousel>
             <button class="next-button" on:click={handleNextClick}>&#10095;</button>
