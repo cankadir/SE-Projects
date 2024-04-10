@@ -9,8 +9,6 @@
     onMount(() => {
 	    console.log('page is mounted');
 	    console.log(`url is ${$page.url}`);
-	    let paramstr = JSON.stringify($page.params);
-	    console.log(`params are ${paramstr}`);
 	    page_data = {
 		    title: $page.params.slug,
 	    };
