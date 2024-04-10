@@ -3,15 +3,31 @@
     // @ts-nocheck
     import {page} from '$app/stores';
     import SplideCarousel from '$lib/components/component_slider.svelte'
+    import PROJECTS_DATA from '$lib/data';
 
     import { onMount } from 'svelte';
     let page_data = {};
+    let filtered_data;
+
     onMount(() => {
-	    console.log('page is mounted');
-	    console.log(`url is ${$page.url}`);
-	    page_data = {
-		    title: $page.params.slug,
-	    };
+
+        console.log("filtered_data is here ");
+        console.log(PROJECTS_DATA);
+
+	    let page_url = $page.url.pathname
+
+	    // take the last part of the url which is the id
+        let id = page_url.substring(page_url.lastIndexOf('/') + 1);
+        console.log(id);
+
+        console.log("page_data is here ");
+        page_data = PROJECTS_DATA.then(data => {
+            data = data.filter(project => project.short_url === id );
+            return data[0];
+        });
+
+        console.log(page_data);
+        
     });
 
     // let filtered_data;
@@ -26,9 +42,15 @@
 
 </script>
 
-{#if page_data}
-    <h1>{page_data.title}</h1>
-{/if}
+<!-- await page_data then -->
+{#await page_data}
+    <p>Loading...</p>
+{:then page_data}
+    <h1>{page_data.client}</h1>
+    <p>{page_data.projects}</p>
+
+{/await}
+
 
 <!-- 
 <div class="project-container">
