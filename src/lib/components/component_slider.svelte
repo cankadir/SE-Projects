@@ -1,7 +1,7 @@
 
 
 <script >
-    // no type checking
+
     // @ts-nocheck
     export let images;
     export let folder;
@@ -15,6 +15,8 @@
     let carousel;
   
     // remove elements from the array that are ""
+    console.log( folder );
+    console.log(images);
     images = images.filter(function (el) { return el != "";});
     images = images.filter(function (el) { return el != "\r"; });
 

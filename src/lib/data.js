@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 export const ssr = false;
 let url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSZkAdwJVMyd8Bx2cbNt1EEc3c9w3SCnGRRpDYn-MswB1nvBWnRoUnMCd8YHmwfDis06USvt-HqdADk/pub?gid=1257598033&single=true&output=tsv';
 
