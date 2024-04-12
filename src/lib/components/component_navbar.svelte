@@ -3,24 +3,36 @@
 </script>
 
 
-<div class="navbar">
-  <div class="logo">
-    <a href="{base}/" class="title button"><span id="title-bold">studio&ensp;</span><span >2263</span></a>
+<navbar>
+
+
+  <div class="navbar-content">
+    <div class="logo">
+      <a href="{base}/" class="title button"><span id="title-bold">studio&ensp;</span><span >2263</span></a>
+    </div>
+    <div class="nav-buttons">
+      <a href='{base}/about' class="about button"><strong>About</strong></a>
+    </div>
   </div>
-  <div class="nav-buttons">
-    <a href='{base}/about' class="about button"><strong>About</strong></a>
-  </div>
-</div>
+
+
+</navbar>
 
 
 
 <style>
-  .navbar {
+
+  navbar{
+    padding: 0 25px;
+  }
+
+  .navbar-content{
+
+    height: 50px;
+
     display: flex;
     justify-content: space-between;
-    align-items: bottom;
     border-bottom: 1px solid var(--text-color);
-    margin: 1.5rem 1rem 0 1rem;
   }
 
   .title {
