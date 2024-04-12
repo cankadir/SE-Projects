@@ -31,12 +31,4 @@ import CARDS from "$lib/components/component_cards.svelte";
 		width: 66%;
 	}
 
-	
-	@media (max-width: 760px){
-		.title-content{
-			width: 100%;
-			padding: 1.5rem 0;
-		}
-	}
-
 </style>

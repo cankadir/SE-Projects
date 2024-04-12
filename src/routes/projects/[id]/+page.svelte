@@ -34,34 +34,51 @@
     <p>Loading...</p>
 {:then page_data}
 
+    
     <div class="project-container">
+        <!---- title -->
         <h2 class="project-title">{page_data.name}</h2>
 
+        <!---- project Detailed Info -->
         <div class="project-table">
-            {#if page_data.client !== '' }
-                <div class="project-info"><span class="title">Client:</span> <span class="content">{page_data.client}</span></div>
-            {/if}
-            {#if page_data.year !== '' }
-                <div class="project-info"><span class="title">Year:</span> <span class="content">{page_data.year}</span></div>
-            {/if}
-            {#if page_data.collaborators !== '' }
-                <div class="project-info"><span class="title">Collaborators:</span> <span class="content">{page_data.collaborators}</span></div>
-            {/if}
-            {#if page_data.roles !== '' }
-                <div class="project-info"><span class="title">Roles:</span> <span class="content">{page_data.roles}</span></div>
-            {/if}
-            {#if page_data.link !== ''}
-                    <div class="project-info"><span class="title">Link:</span> <span class="content"><a href="{page_data.link}" target="_blank">Go to Project Site</a></span></div>
-            {/if}
 
-            <p class="project-content">{page_data.text}</p>
-            
+            <!---- Kunye and Text -->
+            <div class="project-col">
+                <div class="kunye">
+                    {#if page_data.client !== '' }
+                        <div class="project-info"><span class="title">Client:</span> <span class="content">{page_data.client}</span></div>
+                    {/if}
+                    {#if page_data.year !== '' }
+                        <div class="project-info"><span class="title">Year:</span> <span class="content">{page_data.year}</span></div>
+                    {/if}
+                    
+                    {#if page_data.roles !== '' }
+                        <div class="project-info"><span class="title">Project Scope:</span> <span class="content">{page_data.roles}</span></div>
+                    {/if}
+                    {#if page_data.link !== ''}
+                            <div class="project-info"><span class="title">Link:</span> <span class="content"><a href="{page_data.link}" target="_blank">Go to Project Site</a></span></div>
+                    {/if}
+                </div>
+            </div>
+
+            <!---- Text -->
+            <div class="project-col">
+                <p class="project-content" style="margin-bottom:0.5em">{page_data.text}</p>
+                {#if page_data.collaborators !== '' }
+                        <p class="project-content">Collaborators: {page_data.collaborators}</p>
+                {/if}
+            </div>
+        </div>
+
+        <!---- Images -->
+        <div class="slide-carousel">
             {#await images}
                 <p>loading images...</p>
-            {:then imgs} 
+            {:then imgs}
                 <SplideCarousel images={imgs} folder={page_data.image_folder} />
             {/await}
         </div>
+        
     </div>
 {/await}
 
@@ -69,22 +86,62 @@
 
 <style>
     .project-container{
-        max-width: 1200px;
+        margin: 35px 35px;
     }
 
     .project-title{
-        font-size: 2rem;
-        font-weight: bold;
+        font-size: 32px;
+        font-weight: bolder;
+        font-family: "Alright Sans Black", sans-serif;
     }
 
     .project-table{
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
+        display: grid;
+        grid-template-columns: 3fr 7fr;
+        gap: 3rem;
+        margin: 35px 0 0 0;
+    }
+
+    @media (max-width: 768px){
+
+        .project-title{
+            font-size: 24px;
+            margin: 15px 0px
+        }
+
+        .project-container{
+            margin: 25px 0px;
+        }
+        .project-table{
+            grid-template-columns: 1fr;
+            gap:1rem;
+        }
+
+        .kunye{
+            gap: 1rem !important;
+        }
+
+        .slide-carousel{
+            margin: 15px 0px 0 0px !important;
+        }
     }
 
     .project-info > .title{
         font-weight: bold;
+    }
+
+    .project-content {
+        margin: 0;
+        line-height: 1.5rem;
+    }
+
+    .kunye{
+        display: grid;
+        gap: 1.75rem;
+    }
+
+    .slide-carousel{
+        margin: 35px 35px 0 35px;
     }
 
 </style>
