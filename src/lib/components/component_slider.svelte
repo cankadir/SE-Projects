@@ -84,7 +84,7 @@
         object-fit: contain;
         width: 100%;
         height: 100%;
-        max-height: 480px !important;
+        max-height: 640px !important;
     }
 
 </style>

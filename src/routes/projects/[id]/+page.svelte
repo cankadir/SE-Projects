@@ -91,8 +91,8 @@
 
     .project-title{
         font-size: 32px;
-        font-weight: bolder;
-        font-family: "Alright Sans Black", sans-serif;
+        font-family: "Alright Sans Bold", sans-serif;
+        color:#444;
     }
 
     .project-table{
@@ -100,6 +100,8 @@
         grid-template-columns: 3fr 7fr;
         gap: 3rem;
         margin: 35px 0 0 0;
+        font-size: 0.9rem;
+        line-height: 1.5rem;
     }
 
     @media (max-width: 768px){
@@ -128,6 +130,7 @@
 
     .project-info > .title{
         font-weight: bold;
+        color:#444;
     }
 
     .project-content {
@@ -137,7 +140,7 @@
 
     .kunye{
         display: grid;
-        gap: 1.75rem;
+        gap: 1.5rem;
     }
 
     .slide-carousel{
