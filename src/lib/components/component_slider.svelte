@@ -9,14 +9,8 @@
     import Carousel from 'svelte-carousel'
     import { browser } from '$app/environment';
     
-    // base from paths
-    import { base } from '$app/paths';
-
     let carousel;
   
-    // remove elements from the array that are ""
-    console.log( folder );
-    console.log(images);
     images = images.filter(function (el) { return el != "";});
     images = images.filter(function (el) { return el != "\r"; });
 
@@ -39,7 +33,7 @@
             <Carousel bind:this={carousel} arrows={false} itemsToShow={1} itemsToScroll={1} loop={true} >
                 {#each images as image, index}
                     {#if index >0 }
-                        <img class='carousel-images' src="{base}/images/{folder}/{image}" alt="project"/>
+                        <img class='carousel-images' src="../images/{folder}/{image}" alt="project"/>
                     {/if}
                 {/each}
             </Carousel>

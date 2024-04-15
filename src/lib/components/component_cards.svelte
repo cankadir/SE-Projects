@@ -1,15 +1,14 @@
 <script>
 // @ts-nocheck
     export let project;
-    import {base} from '$app/paths';
 
 </script>
 
 {#if project.images[0] !== ""}
-    <div class="card" style="background-image: url('{base}/images/{project.image_folder}/{project.images[0]}');"  >
+    <div class="card" style="background-image: url('images/{project.image_folder}/{project.images[0]}');"  >
         <div class="tint">
             <p>{project.name}</p>
-            <a id="tolink" href="{base}/projects/{project.short_url}"><span class="link"></span></a>
+            <a id="tolink" href="projects/{project.short_url}"><span class="link"></span></a>
         </div>
     </div>
     

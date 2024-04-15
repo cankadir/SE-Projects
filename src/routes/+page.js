@@ -1,2 +1,1 @@
-export const ssr = false;
-// export async function load( params ){}
+export const ssr = true;

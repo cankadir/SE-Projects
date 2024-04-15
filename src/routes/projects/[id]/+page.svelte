@@ -4,26 +4,24 @@
     import {page} from '$app/stores';
     import SplideCarousel from '$lib/components/component_slider.svelte'
     import PROJECTS_DATA from '$lib/data';
-    import { onMount } from 'svelte';
+
     
     let page_data=[];
     let images=[];
+    console.log($page.params.id)
 
-    onMount(() => {
 
-	    let page_url = $page.url.pathname
+    // let page_url = $page.url.pathname
 
-	    // take the last part of the url which is the id
-        let id = page_url.substring(page_url.lastIndexOf('/') + 1);
+    // // take the last part of the url which is the id
+    // let id = page_url.substring(page_url.lastIndexOf('/') + 1);
 
-        page_data = PROJECTS_DATA.then(data => {
-            data = data.filter(project => project.short_url === id );
-            return data[0];
-        });
-        images = page_data.then(data => {
-            return data.images;
-        });
-
+    page_data = PROJECTS_DATA.then(data => {
+        data = data.filter(project => project.short_url === $page.params.id );
+        return data[0];
+    });
+    images = page_data.then(data => {
+        return data.images;
     });
 
 
