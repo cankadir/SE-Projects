@@ -1,7 +1,7 @@
 <script>
-
-import PROJECTS_DATA from "$lib/data";
-import CARDS from "$lib/components/component_cards.svelte";
+	// @ts-nocheck
+	export let data;
+	import CARDS from "$lib/components/component_cards.svelte";
 
 </script>
 
@@ -9,21 +9,17 @@ import CARDS from "$lib/components/component_cards.svelte";
 	<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis incidunt totam minus nam nobis quasi voluptatem illum delectus ab dicta vero numquam officia libero, ut perspiciatis laudantium tempora qui asperiores. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis incidunt totam minus nam nobis quasi voluptatem illum delectus ab dicta vero numquam officia libero, ut perspiciatis laudantium tempora qui asperiores.</p>
 </div>
 
-{#await PROJECTS_DATA}
-	<p>loading...</p>
-{:then data} 
 
+{#if data.props.projects}
+	 
 	<div class="projects-grid">
-		{#each data as project}
+		{#each  data.props.projects as project}
 			{#if project.name } 
 				<CARDS {project}/>
 			{/if}
 		{/each}
 	</div>
-
-{/await}
-
-
+{/if}
 
 <style>
 	.title-content{

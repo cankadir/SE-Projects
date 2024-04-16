@@ -1,18 +1,20 @@
 // @ts-nocheck
 
-let url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSZkAdwJVMyd8Bx2cbNt1EEc3c9w3SCnGRRpDYn-MswB1nvBWnRoUnMCd8YHmwfDis06USvt-HqdADk/pub?gid=1257598033&single=true&output=tsv';
+import {SECRET_URL} from "$env/static/private"
 
 const fetchData = async (url) => {
   const response = await fetch(url);
   const data = await response.text();
+  console.log("Fetching Data");
   return data;
 
 };
 
-let csv_data = fetchData(url);
+let csv_data = fetchData(SECRET_URL);
 
 let PROJECTS_DATA = csv_data.then(data => {
   const rows = data.split('\n');
+  console.log("Formatting Data");
   const projects = rows.map(row => {
 
     const columns = row.split('\t');
@@ -41,8 +43,14 @@ let PROJECTS_DATA = csv_data.then(data => {
 PROJECTS_DATA = PROJECTS_DATA.then(data => {
   data.shift();
   data = data.filter(project => project.code != 'x');
+  console.log("Filtering Data");
   return data;
 });
 
-export default PROJECTS_DATA;
-
+export async function load({ params }) {
+  console.log("Loading Data");
+  const projects = await PROJECTS_DATA;
+  return {
+    props: { projects }
+  };
+}

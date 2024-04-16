@@ -3,36 +3,17 @@
     // @ts-nocheck
     import {page} from '$app/stores';
     import SplideCarousel from '$lib/components/component_slider.svelte'
-    import PROJECTS_DATA from '$lib/data';
 
-    
-    let page_data=[];
-    let images=[];
-    console.log($page.params.id)
+    let data = $page.data;
 
-
-    // let page_url = $page.url.pathname
-
-    // // take the last part of the url which is the id
-    // let id = page_url.substring(page_url.lastIndexOf('/') + 1);
-
-    page_data = PROJECTS_DATA.then(data => {
-        data = data.filter(project => project.short_url === $page.params.id );
-        return data[0];
-    });
-    images = page_data.then(data => {
-        return data.images;
-    });
-
+    let page_data = data.props.projects.filter(project => project.short_url === $page.params.id )[0];
+    let images= page_data.images;
 
 </script>
 
-<!-- await page_data then -->
-{#await page_data}
-    <p>Loading...</p>
-{:then page_data}
 
-    
+{#if page_data}
+
     <div class="project-container">
         <!---- title -->
         <h2 class="project-title">{page_data.name}</h2>
@@ -70,15 +51,14 @@
 
         <!---- Images -->
         <div class="slide-carousel">
-            {#await images}
-                <p>loading images...</p>
-            {:then imgs}
-                <SplideCarousel images={imgs} folder={page_data.image_folder} />
-            {/await}
+            
+            {#if images}
+                <SplideCarousel images={images} folder={page_data.image_folder} />
+            {/if}
         </div>
         
     </div>
-{/await}
+{/if}
 
 
 
