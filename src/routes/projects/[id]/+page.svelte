@@ -4,8 +4,8 @@
     import {page} from '$app/stores';
     import SplideCarousel from '$lib/components/component_slider.svelte'
 
+    // import data from higher the index page
     let data = $page.data;
-
     let page_data = data.props.projects.filter(project => project.short_url === $page.params.id )[0];
     let images= page_data.images;
 
