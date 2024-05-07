@@ -42,9 +42,11 @@
 
             <!---- Text -->
             <div class="project-col">
-                <p class="project-content" style="margin-bottom:0.5em">{page_data.text}</p>
+                
+                <p class="project-content" style="margin-bottom:1em">{page_data.text}</p>
+                
                 {#if page_data.collaborators !== '' }
-                        <p class="project-content">Collaborators: {page_data.collaborators}</p>
+                        <p class="project-content" id="collab">Collaborators: {page_data.collaborators}</p>
                 {/if}
             </div>
         </div>
@@ -113,16 +115,22 @@
 
     .project-content {
         margin: 0;
+        padding: 0;
         line-height: 1.5rem;
+    }
+
+    .project-content > p{
+        margin: 0;
+        padding: 0;
     }
 
     .kunye{
         display: grid;
-        gap: 1.5rem;
+        gap: 1rem;
     }
 
     .slide-carousel{
-        margin: 35px 35px 0 35px;
+        margin: 50px 35px 0 35px;
     }
 
 </style>

@@ -4,8 +4,8 @@
 
 <style>
     footer{
-        margin-top: 35px;
-        height: 15px;
+        margin-top: 5rem;
+        height: 4rem;
         text-align: center;
         border-top: #777 1px solid;
     }

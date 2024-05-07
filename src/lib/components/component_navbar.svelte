@@ -6,13 +6,21 @@
 <navbar>
 
 
-  <div class="navbar-content">
+  <!-- <div class="navbar-content">
     <div class="logo">
       <a href="{base}/" class="title button"><span id="title-bold">studio&ensp;</span><span >2263</span></a>
     </div>
     <div class="nav-buttons">
       <a href='{base}/about' class="about button"><strong>About</strong></a>
     </div>
+  </div> -->
+
+  <div class="navbar-content">
+
+      <a href="{base}/" class="title button"><span id="title-bold">studio&ensp;</span><span >2263</span></a>
+
+      <a href='{base}/about' class="about button"><strong>About</strong></a>
+
   </div>
 
 
@@ -27,24 +35,21 @@
   }
 
   .navbar-content{
-
-    height: 50px;
-
+    height: 55px;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid var(--text-color);
+    padding-bottom: 4px;
   }
 
   .title {
     font-size: 1.5rem;
-    text-decoration: none;
   }
 
   .about{
-    /* on hover color is orange */
     color: var(--text-color);
-    text-decoration: none;
   }
+
   .about:hover{
     color: var(--orange);
   }
@@ -56,18 +61,18 @@
   }
 
   .button {
-    height: 100%;
-    border: none;
     cursor: pointer;
-    background-color: none;
     color:#333;
+    text-decoration: none;
   }
 
   a{
-    height: 100%;
-    /* alight at bottom */
+    /* height: 100%; */
     display: flex;
     align-items: flex-end;
+
+    /* justify text to bottom */
+    vertical-align: bottom;
   }
 
 
