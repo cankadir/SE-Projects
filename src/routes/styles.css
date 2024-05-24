@@ -24,12 +24,15 @@
 	src: url('/fonts/AlrightSans-Black-v3.ttf') format('truetype');
 }
 
-body {
-	background-color: var(--background-color);
+html,body{
 	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
 	font-family: 'Alright Sans Regular', sans-serif;
 	color : var( --text-color);
 	box-sizing: border-box;
+	background-color: var(--background-color);
 }
 
 .app {
@@ -38,7 +41,8 @@ body {
 	flex-direction: column;
 	max-width: 1920px;
 	margin: 0 50px;
-	padding: 0 1.5rem; 
+	padding: 0 1.5rem;
+	height: 100%; 
 
 }
 
@@ -128,4 +132,8 @@ button:focus:not(:focus-visible) {
 	position: absolute;
 	width: 1px;
 	white-space: nowrap;
+}
+
+.sc-carousel-dots__container{
+	margin-top: 0.75rem !important;
 }

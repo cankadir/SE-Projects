@@ -1,18 +1,30 @@
 
-
 <div class="bios">
     <div class="bios-grid">
+        <div class="bio-block" id="studio">
+            <p class="bio-content">Studio 2263, and previously at Pratt Institute’s Spatial Analysis and Visualization Initiative (SAVI), we collborated with a variety of organizations around New York City to contribute geospatial analysis and research to projects while designing platforms, tools and systems through which to communicate that work. Current projects involve collaboration with FloodNet to create an interactive tool to engage New York City residents with flood data; projects with the NY State Department of Environmental Conservation and the NY-NJ Harbor and Estuary Program concerning public access and stewardship of the Hudson River Estuary. Both members are co-organizaers of the annual data-driven art exhibition to support and promote innovative use of NYC’s Open Data called Data Through Design.</p>
+        </div>
         <div class="bio-block" id="sara">
-            <p class="bio-content"><span class="name">Sara Eichner</span> is a designer and cartographer focusing on data driven stories. She works in Brooklyn, NY with Pratt Institute’s Spatial Analysis and Visualization Initiative (SAVI) on a variety of design and geospatial projects, and she teaches GIS and spatial thinking in the Pratt School of Information graduate program. Some recent and ongoing projects are with the NYC DOT, Etsy, the NY State Department of Conservation, the Queens Museum, and the NY-NJ Harbor & Estuary Program. Sara has also had a career as a visual artist and has worked as an organizer of the Data Through Design exhibition since 2019.</p>
+            <div class="photo">
+                <img class="bio-photo" src="./images/bio/eichner_photo.jpg" alt="" >
+            </div>
+            <div class="info">
+                <p class="bio-content"><span class="name">Sara Eichner</span> designer and cartographer. Working at the intersection of data analysis and design, she explores creative and pragmatic methods of data interpretation using data visualization and interactive tools to tell the stories found within data and the people they represent.
+                    <br><br>Sara has a masters in fine arts in painting from Syracuse University and a certificate in GIS from Pratt institute. She has taught Spatial Thinking, GIS and Design at Pratt Institute to graduate students in the School of Information as well as User Centered Design for GIS in the Pratt School of Continuing and Professional Studies.</p>
+            </div>
         </div>
         <div class="bio-block" id="can">
-            <p class="bio-content"><span class="name">Can Kadir Sucuoglu</span> is currently working as a data scientist at Numina focusing on sustainable mobility after leading the Spatial Analytics and Visualization Initiative (SAVI) at Pratt Institute, a research center dedicated to empowering communities through data analytics and mapping. He is a trained architect from the Sci_Arc. Can teaches in the School of Architecture and School of Information at Pratt Institute.</p>
+            <div class="photo">
+                <img class="bio-photo" src="./images/bio/can_photo.jpg" alt="" >
+            </div>
+            <div class="info">
+                <p class="bio-content"><span class="name">Can Kadir Sucuoglu</span> is a data scientist specializing in data visualization and mapping, originally trained as an architect at the Southern California Institute of Architecture (Sci_Arc). He researches data’s role in urban and built environments and led the Spatial Analytics and Visualization Initiative (SAVI) at Pratt Institute, working on public information communication projects. He teaches data visualization and GIS courses at the Pratt Institute and co-organizes Data Through Design (DxD). In 2016, he co-founded Bits and Bricks in Istanbul, a research group providing data-based design consultancy and exploring digital technologies to improve urban environments. Currently, Can works at Numina, a NYC-based startup collecting data on hyper-local mobility trends.</p>
+            </div>
         </div>
 
     </div>
 
 </div>
-
 
 <style>
     .bios {
@@ -27,10 +39,42 @@
 
     .bio-block {
         padding: 1.5rem 0;
+        display: flex;
+        flex-direction: row;
+        gap: 3rem;
+    }
+
+    .photo{
+        max-width: 200px;
+        min-width: 200px;
+    }
+
+    .bio-photo{
+        width: 100%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        height: auto;
     }
 
     .name {
         font-weight: bold;
+    }
+
+    .info > p {
+        padding:0;
+        margin:0;
+    }
+
+    /* if the screensize is smaller than 720 then hide .photo */
+    @media (max-width: 720px) {
+        .bio-block {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .photo{
+            display: none;
+        }
     }
 
 

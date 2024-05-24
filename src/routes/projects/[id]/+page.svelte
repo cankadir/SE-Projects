@@ -73,6 +73,7 @@
         font-size: 32px;
         font-family: "Alright Sans Bold", sans-serif;
         color:#444;
+        font-weight: 600;
     }
 
     .project-table{
