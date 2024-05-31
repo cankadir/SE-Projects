@@ -1,31 +1,10 @@
-<script>
-    import {base} from '$app/paths';
-</script>
-
 
 <navbar>
-
-
-  <!-- <div class="navbar-content">
-    <div class="logo">
-      <a href="{base}/" class="title button"><span id="title-bold">studio&ensp;</span><span >2263</span></a>
-    </div>
-    <div class="nav-buttons">
-      <a href='{base}/about' class="about button"><strong>About</strong></a>
-    </div>
-  </div> -->
-
   <div class="navbar-content">
-
-      <a href="{base}/" class="title button"><span id="title-bold">studio&ensp;</span><span >2263</span></a>
-
-      <a href='{base}/about' class="about button"><strong>About</strong></a>
-
+      <a href="../" class="title button"><span id="title-bold">studio&ensp;</span><span>2263</span></a>
+      <a href='../about' class="about button"><strong>About</strong></a>
   </div>
-
-
 </navbar>
-
 
 
 <style>
@@ -67,13 +46,8 @@
   }
 
   a{
-    /* height: 100%; */
     display: flex;
     align-items: flex-end;
-
-    /* justify text to bottom */
     vertical-align: bottom;
   }
-
-
 </style>

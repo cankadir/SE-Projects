@@ -110,19 +110,15 @@
     }
 
     .project-info > .title{
-        font-weight: bold;
+        font-family: "Alright Sans Bold", sans-serif;
         color:#444;
+        font-weight: 500;
     }
 
     .project-content {
         margin: 0;
         padding: 0;
         line-height: 1.5rem;
-    }
-
-    .project-content > p{
-        margin: 0;
-        padding: 0;
     }
 
     .kunye{
