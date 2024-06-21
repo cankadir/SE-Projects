@@ -1,8 +1,9 @@
 <script>
 	// @ts-nocheck
-	export let data;
-	import CARDS from "$lib/components/component_cards.svelte";
 
+	import { page } from '$app/stores';
+	import CARDS from "$lib/components/component_cards.svelte";
+	$: data = $page.data;
 </script>
 
 <div class="title-content">
@@ -10,15 +11,16 @@
 </div>
 
 
-{#if data.props.projects}
-	 
+{#if data.props.records}
 	<div class="projects-grid">
-		{#each  data.props.projects as project}
+		{#each  data.props.records as project}
 			{#if project.name } 
 				<CARDS {project}/>
 			{/if}
 		{/each}
 	</div>
+{:else}
+	<p>loading...</p>
 {/if}
 
 <style>

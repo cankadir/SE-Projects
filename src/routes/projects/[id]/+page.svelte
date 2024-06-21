@@ -4,19 +4,26 @@
     import {page} from '$app/stores';
     import SplideCarousel from '$lib/components/component_slider.svelte'
 
-    // import data from higher the index page
-    let data = $page.data;
-    let page_data = data.props.projects.filter(project => project.short_url === $page.params.id )[0];
-    let images= page_data.images;
+    // import data from +layout.svelte
+    let page_data = $page.data.props.records;
+
+    // get page url
+    let url  = $page.url.pathname;
+    let urlParts = url.split('/');
+    let projectid = urlParts[urlParts.length - 1];
+
+    // filter page data by project id, using shotr_url filed
+    let project_data = page_data.filter(project => project.short_url === projectid )[0];
+    let images = project_data.images;
 
 </script>
 
 
-{#if page_data}
+{#if project_data}
 
     <div class="project-container">
         <!---- title -->
-        <h2 class="project-title">{page_data.name}</h2>
+        <h2 class="project-title">{project_data.name}</h2>
 
         <!---- project Detailed Info -->
         <div class="project-table">
@@ -24,45 +31,42 @@
             <!---- Kunye and Text -->
             <div class="project-col">
                 <div class="kunye">
-                    {#if page_data.client !== '' }
-                        <div class="project-info"><span class="title">Client:</span> <span class="content">{page_data.client}</span></div>
+                    {#if project_data.client }
+                        <div class="project-info"><span class="title">Client:</span> <span class="content">{project_data.client}</span></div>
                     {/if}
-                    {#if page_data.year !== '' }
-                        <div class="project-info"><span class="title">Year:</span> <span class="content">{page_data.year}</span></div>
+                    {#if project_data.year }
+                        <div class="project-info"><span class="title">Year:</span> <span class="content">{project_data.year}</span></div>
                     {/if}
                     
-                    {#if page_data.roles !== '' }
-                        <div class="project-info"><span class="title">Project Scope:</span> <span class="content">{page_data.roles}</span></div>
+                    {#if project_data.roles }
+                        <div class="project-info"><span class="title">Project Scope:</span> <span class="content">{project_data.roles}</span></div>
                     {/if}
-                    {#if page_data.link !== ''}
-                            <div class="project-info"><span class="title">Link:</span> <span class="content"><a href="{page_data.link}" target="_blank">Go to Project Site</a></span></div>
+                    {#if project_data.link }
+                            <div class="project-info"><span class="title">Link:</span> <span class="content"><a href="{project_data.link}" target="_blank">Go to Project Site</a></span></div>
                     {/if}
                 </div>
             </div>
 
             <!---- Text -->
             <div class="project-col">
-                
-                <p class="project-content" style="margin-bottom:1em">{page_data.text}</p>
-                
-                {#if page_data.collaborators !== '' }
-                        <p class="project-content" id="collab">Collaborators: {page_data.collaborators}</p>
+                <p class="project-content" style="margin-bottom:1em">{project_data.text}</p>
+                {#if project_data.collaborators }
+                        <p class="project-content" id="collab">Collaborators: {project_data.collaborators}</p>
                 {/if}
             </div>
         </div>
 
         <!---- Images -->
         <div class="slide-carousel">
-            
             {#if images}
-                <SplideCarousel images={images} folder={page_data.image_folder} />
+                <SplideCarousel images={images} />
             {/if}
         </div>
-        
     </div>
+
+{:else}
+    <p>Project does not exist...</p>
 {/if}
-
-
 
 <style>
     .project-container{

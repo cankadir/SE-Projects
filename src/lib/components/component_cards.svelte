@@ -1,23 +1,15 @@
 <script>
 // @ts-nocheck
     export let project;
-
 </script>
 
-{#if project.images[0] !== ""}
-    <div class="card" style="background-image: url('images/{project.image_folder}/{project.images[0]}');"  >
-        <div class="tint">
-            <p>{project.name}</p>
-            <a id="tolink" href="projects/{project.short_url}"><span class="link"></span></a>
-        </div>
-    </div>
-    
-{:else}
-    <div class="card">
-        <p>{project.name}</p>
-    </div>
-{/if}
 
+<div class="card" style="background-image: url('{project['cover image'][0].thumbnails.large.url}');"  >
+    <div class="tint">
+        <p>{project.name}</p>
+        <a id="tolink" href="projects/{project.short_url}"><span class="link"></span></a>
+    </div>
+</div>
 
 <style>
 

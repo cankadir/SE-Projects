@@ -1,20 +1,14 @@
 
 
 <script >
-
     // @ts-nocheck
     export let images;
-    export let folder;
     
     import Carousel from 'svelte-carousel'
     import { browser } from '$app/environment';
     
-    let carousel;
-  
-    images = images.filter(function (el) { return el != "";});
-    images = images.filter(function (el) { return el != "\r"; });
-
     // Carousel Buttons
+    let carousel;
     const handleNextClick = () => { carousel.goToNext()}
     const handlePrevClick = () => { carousel.goToPrev() }
 
@@ -23,26 +17,19 @@
 {#await images}
 	<p>images are loading...</p>
 {:then images} 
-
-
     <div class="project-images">
-
-
         {#if browser}
             <button class="prev-button" on:click={handlePrevClick}>&#10094;</button>
             <Carousel bind:this={carousel} arrows={false} itemsToShow={1} itemsToScroll={1} loop={true} >
                 {#each images as image, index}
                     {#if index >0 }
-                        <img class='carousel-images' src="../images/{folder}/{image}" alt="project"/>
+                        <img class='carousel-images' src="{image.url}" alt="project"/>
                     {/if}
                 {/each}
             </Carousel>
             <button class="next-button" on:click={handleNextClick}>&#10095;</button>
-
         {/if}
-
     </div>
-
 {/await}
 
 <style>
