@@ -15,7 +15,6 @@
     // filter page data by project id, using shotr_url filed
     let project_data = page_data.filter(project => project.short_url === projectid )[0];
     let images = project_data.images;
-
 </script>
 
 
