@@ -7,7 +7,7 @@
 </script>
 
 <div class="title-content">
-	<p>Studio 2263 works at the intersection of data science, research and design. User-centered, human-centered design drives accessible communication and extends the reach and impact of positive, mission driven work. Studio 2263 specializes in building creative data visualization and cartography as well as custom built tools tailored to meet the unique needs of each project and to  clarify complex issues and research. All projects begin and end with a deep understanding of the data.</p>
+	<p>Studio 2263 works at the intersection of data science, research and design. User and human-centered design drives accessible communication and extends the impact of positive, mission-driven work. Studio 2263 specializes in building creative data visualization and cartography as well as custom built tools tailored to meet the unique needs of each project and to clarify complex issues and research.</p>
 </div>
 
 

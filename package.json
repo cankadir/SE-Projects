@@ -23,6 +23,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@fontsource-variable/source-sans-3": "^5.0.20"
+		"@fontsource-variable/source-sans-3": "^5.0.20",
+		"marked": "^13.0.0"
 	}
 }

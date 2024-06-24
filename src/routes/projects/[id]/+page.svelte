@@ -4,6 +4,7 @@
     import {page} from '$app/stores';
     import SplideCarousel from '$lib/components/component_slider.svelte'
 
+    import { marked } from 'marked';
     // import data from +layout.svelte
     let page_data = $page.data.props.records;
 
@@ -14,9 +15,10 @@
 
     // filter page data by project id, using shotr_url filed
     let project_data = page_data.filter(project => project.short_url === projectid )[0];
+    console.log( project_data );
     let images = project_data.images;
-</script>
 
+</script>
 
 {#if project_data}
 
@@ -37,8 +39,8 @@
                         <div class="project-info"><span class="title">Year:</span> <span class="content">{project_data.year}</span></div>
                     {/if}
                     
-                    {#if project_data.roles }
-                        <div class="project-info"><span class="title">Project Scope:</span> <span class="content">{project_data.roles}</span></div>
+                    {#if project_data['roles / scope'] }
+                        <div class="project-info"><span class="title">Project Scope:</span> <span class="content">{project_data['roles / scope']}</span></div>
                     {/if}
                     {#if project_data.link }
                             <div class="project-info"><span class="title">Link:</span> <span class="content"><a href="{project_data.link}" target="_blank">Go to Project Site</a></span></div>
@@ -48,9 +50,9 @@
 
             <!---- Text -->
             <div class="project-col">
-                <p class="project-content" style="margin-bottom:1em">{project_data.text}</p>
-                {#if project_data.collaborators }
-                        <p class="project-content" id="collab">Collaborators: {project_data.collaborators}</p>
+                <p class="project-content" style="margin-bottom:1em">{@html marked.parse(project_data.text)}</p>
+                {#if project_data['Collaborators'] }
+                        <p class="project-content" id="collab">Collaborators: {project_data.Collaborators}</p>
                 {/if}
             </div>
         </div>
