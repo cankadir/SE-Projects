@@ -21,6 +21,10 @@ export async function load({ fetch }) {
   records = records.map(record => record.fields);
   console.log("Data Received from Air table - Reports");
 
+  // sort records by code, but convert to number first
+  records.sort((a, b) => parseInt(a.code) - parseInt(b.code));
+  console.log(records);
+
   return {
     props: { records }
   };
