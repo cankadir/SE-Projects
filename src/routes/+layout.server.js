@@ -19,11 +19,9 @@ export async function load({ fetch }) {
   records.sort((a, b) => a.fields.code.localeCompare(b.fields.code));
   // extract only fields, I don't need meta data on the records
   records = records.map(record => record.fields);
-  console.log("Data Received from Air table - Reports");
 
   // sort records by code, but convert to number first
   records.sort((a, b) => parseInt(a.code) - parseInt(b.code));
-  console.log(records);
 
   return {
     props: { records }

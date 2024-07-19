@@ -1,7 +1,9 @@
 
 <navbar>
   <div class="navbar-content">
-      <a href="../" class="title button"><span id="title-bold">studio&ensp;</span><span>2263</span></a>
+      <a href="../" class="title button">
+        <img src="/images/logo.svg" alt="studio logo" height="30px" width="auto">
+      </a>
       <a href='../about' class="about button"><strong>About</strong></a>
   </div>
 </navbar>
@@ -31,12 +33,6 @@
 
   .about:hover{
     color: var(--orange);
-  }
-
-  #title-bold {
-    font-family: 'Alright Sans Bold', sans-serif;
-    font-weight: bold;
-    color: var(--orange)!important;
   }
 
   .button {
