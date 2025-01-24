@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import CARDS from "$lib/components/component_cards.svelte";
 	$: data = $page.data;
+
 </script>
 
 <div class="title-content">
@@ -11,9 +12,9 @@
 </div>
 
 
-{#if data.props.records}
+{#if data.props.data}
 	<div class="projects-grid">
-		{#each  data.props.records as project}
+		{#each  data.props.data as project}
 			{#if project.name } 
 				<CARDS {project}/>
 			{/if}

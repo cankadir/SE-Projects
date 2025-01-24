@@ -3,8 +3,11 @@
     export let project;
 </script>
 
-
-<div class="card" style="background-image: url('{project['cover image'][0].thumbnails.large.url}');"  >
+<div 
+    class="card" 
+    style="background-image: url('https://mhdoyvmbgsrbsifouhxo.supabase.co/storage/v1/object/public/2263_websiteImgs/website_images/{project['short_url']}/cover.jpg');"  
+    >
+    
     <div class="tint">
         <p>{project.name}</p>
         <a id="tolink" href="projects/{project.short_url}"><span class="link"></span></a>

@@ -5,8 +5,9 @@
     import SplideCarousel from '$lib/components/component_slider.svelte'
 
     import { marked } from 'marked';
+    
     // import data from +layout.svelte
-    let page_data = $page.data.props.records;
+    let page_data = $page.data.props.data;
 
     // get page url
     let url  = $page.url.pathname;
@@ -15,8 +16,14 @@
 
     // filter page data by project id, using shotr_url filed
     let project_data = page_data.filter(project => project.short_url === projectid )[0];
-    console.log( project_data );
-    let images = project_data.images;
+    
+    let images = $page.data.imgs;
+    let imageLinks = images
+        .filter(element => element['name'] !== 'cover.jpg')
+        .map(element => {
+            let url = `https://mhdoyvmbgsrbsifouhxo.supabase.co/storage/v1/object/public/2263_websiteImgs/website_images/${projectid}/${element['name']}`;
+            return url;
+        });
 
 </script>
 
@@ -60,7 +67,7 @@
         <!---- Images -->
         <div class="slide-carousel">
             {#if images}
-                <SplideCarousel images={images} />
+                <SplideCarousel images={imageLinks} />
             {/if}
         </div>
     </div>

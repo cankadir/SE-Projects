@@ -23,7 +23,7 @@
             <Carousel bind:this={carousel} arrows={false} itemsToShow={1} itemsToScroll={1} loop={true} >
                 {#each images as image, index}
                     {#if index >0 }
-                        <img class='carousel-images' src="{image.url}" alt="project"/>
+                        <img class='carousel-images' src="{image}" alt="project"/>
                     {/if}
                 {/each}
             </Carousel>

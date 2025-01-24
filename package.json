@@ -25,6 +25,7 @@
 	"type": "module",
 	"dependencies": {
 		"@fontsource-variable/source-sans-3": "^5.0.20",
+		"@supabase/supabase-js": "^2.48.0",
 		"marked": "^13.0.0"
 	}
 }
