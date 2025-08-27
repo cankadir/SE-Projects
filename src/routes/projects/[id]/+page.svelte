@@ -5,25 +5,28 @@
     import SplideCarousel from '$lib/components/component_slider.svelte'
 
     import { marked } from 'marked';
+    let page_data, url, urlParts, projectid, project_data, images, imageLinks;
     
-    // import data from +layout.svelte
-    let page_data = $page.data.props.data;
-
-    // get page url
-    let url  = $page.url.pathname;
-    let urlParts = url.split('/');
-    let projectid = urlParts[urlParts.length - 1];
-
-    // filter page data by project id, using shotr_url filed
-    let project_data = page_data.filter(project => project.short_url === projectid )[0];
     
-    let images = $page.data.imgs;
-    let imageLinks = images
-        .filter(element => element['name'] !== 'cover.jpg')
-        .map(element => {
-            let url = `https://mhdoyvmbgsrbsifouhxo.supabase.co/storage/v1/object/public/2263_websiteImgs/website_images/${projectid}/${element['name']}`;
-            return url;
-        });
+    $: if($page) {
+        page_data = $page.data.props.data;
+
+        // get page url
+        url  = $page.url.pathname;
+        urlParts = url.split('/');
+        projectid = urlParts[urlParts.length - 1];
+
+        // filter page data by project id, using shotr_url filed
+        project_data = page_data.filter(project => project.short_url === projectid )[0];
+        
+        images = $page.data.imgs;
+        imageLinks = images
+            .filter(element => element['name'] !== 'cover.jpg')
+            .map(element => {
+                let url = `https://mhdoyvmbgsrbsifouhxo.supabase.co/storage/v1/object/public/2263_websiteImgs/website_images/${projectid}/${element['name']}`;
+                return url;
+            });
+    } 
 
 </script>
 

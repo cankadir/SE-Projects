@@ -8,7 +8,7 @@ export async function load({ fetch, params }) {
         .storage
         .from("2263_websiteImgs")
         .list( `website_images/${id}` );
-
+    
     return {
         imgs: data
     }
