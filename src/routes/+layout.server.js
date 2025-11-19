@@ -5,7 +5,8 @@ export async function load({ fetch }) {
 
   const { data, error } = await supabase
     .from('2263 website content')
-    .select('*');
+    .select('*')
+    .order('code', { ascending: true });;
 
   return {
     props: { data }

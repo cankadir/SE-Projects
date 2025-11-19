@@ -3,11 +3,8 @@
     export let project;
 </script>
 
-<div 
-    class="card" 
-    style="background-image: url('https://mhdoyvmbgsrbsifouhxo.supabase.co/storage/v1/object/public/2263_websiteImgs/website_images/{project['short_url']}/cover.jpg');"  
-    >
-    
+<div class="card">
+    <img class='card-img' src="https://mhdoyvmbgsrbsifouhxo.supabase.co/storage/v1/object/public/2263_websiteImgs/website_images/{project['short_url']}/cover.jpg" alt="project cover" aria-hidden="true">
     <div class="tint">
         <p>{project.name}</p>
         <a id="tolink" href="projects/{project.short_url}"><span class="link"></span></a>
@@ -15,6 +12,17 @@
 </div>
 
 <style>
+
+    .card-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top left; 
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+    }
 
 
     .link {
@@ -31,9 +39,6 @@
         height:auto;
         aspect-ratio: 4/2.5;
         cursor: pointer;
-        object-fit: cover;
-        background-size: cover;
-        background-position: top center;
         box-sizing: border-box;
     }
 
