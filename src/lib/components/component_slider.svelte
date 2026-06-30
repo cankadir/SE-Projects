@@ -1,69 +1,94 @@
+<script>
+	// @ts-nocheck
+	import { onMount } from 'svelte';
+	import CarouselImage from '$lib/components/component_carousel_image.svelte';
 
+	export let images = [];
 
-<script >
-    // @ts-nocheck
-    export let images;
-    
-    import Carousel from 'svelte-carousel'
-    import { browser } from '$app/environment';
-    
-    // Carousel Buttons
-    let carousel;
-    const handleNextClick = () => { carousel.goToNext()}
-    const handlePrevClick = () => { carousel.goToPrev() }
+	let Carousel = null;
+	let mounted = false;
+	let carousel;
 
+	onMount(async () => {
+		Carousel = (await import('svelte-carousel')).default;
+		mounted = true;
+	});
+
+	const handleNextClick = () => carousel?.goToNext();
+	const handlePrevClick = () => carousel?.goToPrev();
 </script>
 
-{#await images}
-	<p>images are loading...</p>
-{:then images} 
-    <div class="project-images">
-        {#if browser}
-            <button class="prev-button" on:click={handlePrevClick}>&#10094;</button>
-            <Carousel bind:this={carousel} arrows={false} itemsToShow={1} itemsToScroll={1} loop={true} >
-                {#each images as image, index}
-                    <img class='carousel-images' src="{image}" alt="project"/>
-                {/each}
-            </Carousel>
-            <button class="next-button" on:click={handleNextClick}>&#10095;</button>
-        {/if}
-    </div>
-{/await}
+<div class="project-images">
+	{#if mounted && Carousel}
+		<button class="prev-button" on:click={handlePrevClick} aria-label="Previous image">&#10094;</button>
+		<svelte:component
+			this={Carousel}
+			bind:this={carousel}
+			arrows={false}
+			itemsToShow={1}
+			itemsToScroll={1}
+			loop={true}
+		>
+			{#each images as image}
+				<CarouselImage src={image} />
+			{/each}
+		</svelte:component>
+		<button class="next-button" on:click={handleNextClick} aria-label="Next image">&#10095;</button>
+	{:else}
+		<div class="gallery-placeholder" aria-hidden="true">
+			<div class="spinner"></div>
+		</div>
+	{/if}
+</div>
 
 <style>
+	.project-images {
+		position: relative;
+		width: 100%;
+	}
 
-    .project-images{
-        position: relative;
-        width: 100%;
-        height: 100%;
-    }
+	.gallery-placeholder {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 640px;
+		background-color: hsl(0, 0%, 90%);
+	}
 
-    .prev-button, .next-button{
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: rgba(0, 0, 0, 0.5);
-        color: white;
-        border: none;
-        cursor: pointer;
-        padding: 10px;
-        font-size: 25px;
-        z-index: 100;
-    }
+	.spinner {
+		width: 2rem;
+		height: 2rem;
+		border: 3px solid hsl(0, 0%, 82%);
+		border-top-color: var(--orange);
+		border-radius: 50%;
+		animation: spin 0.8s linear infinite;
+	}
 
-    .prev-button{
-        left: 0;
-    }
+	@keyframes spin {
+		to {
+			transform: rotate(360deg);
+		}
+	}
 
-    .next-button{
-        right: 0;
-    }
+	.prev-button,
+	.next-button {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		background-color: rgba(0, 0, 0, 0.5);
+		color: white;
+		border: none;
+		cursor: pointer;
+		padding: 10px;
+		font-size: 25px;
+		z-index: 100;
+	}
 
-    .carousel-images{
-        object-fit: contain;
-        width: 100%;
-        height: 100%;
-        max-height: 640px !important;
-    }
+	.prev-button {
+		left: 0;
+	}
 
+	.next-button {
+		right: 0;
+	}
 </style>

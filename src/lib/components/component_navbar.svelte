@@ -1,17 +1,17 @@
 
-<navbar>
+<nav class="navbar">
   <div class="navbar-content">
       <a href="../" class="title button">
         <img src="/images/logo.svg" alt="studio logo" height="30px" width="auto">
       </a>
       <a href='../about' class="about button"><strong>About</strong></a>
   </div>
-</navbar>
+</nav>
 
 
 <style>
 
-  navbar{
+  .navbar {
     padding: 0 25px;
   }
 

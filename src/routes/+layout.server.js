@@ -1,14 +1,15 @@
 // @ts-nocheck
-import supabase from '$lib/supabaseClient';
+import { createSupabase } from '$lib/supabaseClient';
 
 export async function load({ fetch }) {
+	const supabase = await createSupabase(fetch);
 
-  const { data, error } = await supabase
-    .from('2263 website content')
-    .select('*')
-    .order('code', { ascending: true });;
+	const { data } = await supabase
+		.from('2263 website content')
+		.select('*')
+		.order('code', { ascending: true });
 
-  return {
-    props: { data }
-  };
+	return {
+		projects: data ?? []
+	};
 }

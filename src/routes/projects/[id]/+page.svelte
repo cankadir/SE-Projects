@@ -1,150 +1,126 @@
 
 <script>
-    // @ts-nocheck
-    import {page} from '$app/stores';
-    import SplideCarousel from '$lib/components/component_slider.svelte'
+	// @ts-nocheck
+	export let data;
 
-    import { marked } from 'marked';
-    let page_data, url, urlParts, projectid, project_data, images, imageLinks;
-    
-    
-    $: if($page) {
-        page_data = $page.data.props.data;
-
-        // get page url
-        url  = $page.url.pathname;
-        urlParts = url.split('/');
-        projectid = urlParts[urlParts.length - 1];
-
-        // filter page data by project id, using shotr_url filed
-        project_data = page_data.filter(project => project.short_url === projectid )[0];
-        
-        images = $page.data.imgs;
-        imageLinks = images
-            .filter(element => element['name'] !== 'cover.jpg')
-            .map(element => {
-                let url = `https://mhdoyvmbgsrbsifouhxo.supabase.co/storage/v1/object/public/2263_websiteImgs/website_images/${projectid}/${element['name']}`;
-                return url;
-            });
-    } 
-
+	import SplideCarousel from '$lib/components/component_slider.svelte';
 </script>
 
-{#if project_data}
+{#if data.project}
+	<div class="project-container">
+		<h2 class="project-title">{data.project.name}</h2>
 
-    <div class="project-container">
-        <!---- title -->
-        <h2 class="project-title">{project_data.name}</h2>
+		<div class="project-table">
+			<div class="project-col">
+				<div class="kunye">
+					{#if data.project.client}
+						<div class="project-info"><span class="title">Client:</span> <span class="content">{data.project.client}</span></div>
+					{/if}
+					{#if data.project.year}
+						<div class="project-info"><span class="title">Year:</span> <span class="content">{data.project.year}</span></div>
+					{/if}
+					{#if data.project['roles / scope']}
+						<div class="project-info"><span class="title">Project Scope:</span> <span class="content">{data.project['roles / scope']}</span></div>
+					{/if}
+					{#if data.project.link}
+						<div class="project-info"><span class="title">Link:</span> <span class="content"><a href="{data.project.link}" target="_blank">Go to Project Site</a></span></div>
+					{/if}
+				</div>
+			</div>
 
-        <!---- project Detailed Info -->
-        <div class="project-table">
+			<div class="project-col">
+				<div class="project-content project-text">{@html data.project.html}</div>
+				{#if data.project.Collaborators}
+					<p class="project-content collaborators">Collaborators: {data.project.Collaborators}</p>
+				{/if}
+			</div>
+		</div>
 
-            <!---- Kunye and Text -->
-            <div class="project-col">
-                <div class="kunye">
-                    {#if project_data.client }
-                        <div class="project-info"><span class="title">Client:</span> <span class="content">{project_data.client}</span></div>
-                    {/if}
-                    {#if project_data.year }
-                        <div class="project-info"><span class="title">Year:</span> <span class="content">{project_data.year}</span></div>
-                    {/if}
-                    
-                    {#if project_data['roles / scope'] }
-                        <div class="project-info"><span class="title">Project Scope:</span> <span class="content">{project_data['roles / scope']}</span></div>
-                    {/if}
-                    {#if project_data.link }
-                            <div class="project-info"><span class="title">Link:</span> <span class="content"><a href="{project_data.link}" target="_blank">Go to Project Site</a></span></div>
-                    {/if}
-                </div>
-            </div>
-
-            <!---- Text -->
-            <div class="project-col">
-                <p class="project-content" style="margin-bottom:1em">{@html marked.parse(project_data.text)}</p>
-                {#if project_data['Collaborators'] }
-                        <p class="project-content" id="collab">Collaborators: {project_data.Collaborators}</p>
-                {/if}
-            </div>
-        </div>
-
-        <!---- Images -->
-        <div class="slide-carousel">
-            {#if images}
-                <SplideCarousel images={imageLinks} />
-            {/if}
-        </div>
-    </div>
-
+		<div class="slide-carousel">
+			{#if data.imageLinks.length}
+				<SplideCarousel images={data.imageLinks} />
+			{/if}
+		</div>
+	</div>
 {:else}
-    <p>Project does not exist...</p>
+	<p>Project does not exist...</p>
 {/if}
 
 <style>
-    .project-container{
-        margin: 35px 35px;
-    }
+	.project-container {
+		margin: 35px 35px;
+	}
 
-    .project-title{
-        font-size: 32px;
-        font-family: "Alright Sans Bold", sans-serif;
-        color:#444;
-        font-weight: 600;
-    }
+	.project-title {
+		font-size: 32px;
+		font-family: "Alright Sans Bold", sans-serif;
+		color: #444;
+		font-weight: 600;
+	}
 
-    .project-table{
-        display: grid;
-        grid-template-columns: 3fr 7fr;
-        gap: 3rem;
-        margin: 35px 0 0 0;
-        font-size: 0.9rem;
-        line-height: 1.5rem;
-    }
+	.project-table {
+		display: grid;
+		grid-template-columns: 3fr 7fr;
+		gap: 3rem;
+		margin: 35px 0 0 0;
+		font-size: 0.9rem;
+		line-height: 1.5rem;
+	}
 
-    @media (max-width: 768px){
+	@media (max-width: 768px) {
+		.project-title {
+			font-size: 24px;
+			margin: 15px 0px;
+		}
 
-        .project-title{
-            font-size: 24px;
-            margin: 15px 0px
-        }
+		.project-container {
+			margin: 25px 0px;
+		}
 
-        .project-container{
-            margin: 25px 0px;
-        }
-        .project-table{
-            grid-template-columns: 1fr;
-            gap:1rem;
-        }
+		.project-table {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
 
-        .kunye{
-            gap: 1rem !important;
-        }
+		.kunye {
+			gap: 1rem !important;
+		}
 
-        .slide-carousel{
-            margin: 15px 0px 0 0px !important;
-        }
-    }
+		.slide-carousel {
+			margin: 15px 0px 0 0px !important;
+		}
+	}
 
-    .project-info > .title{
-        font-family: "Alright Sans Bold", sans-serif;
-        color:#444;
-        font-weight: 500;
-    }
+	.project-info > .title {
+		font-family: "Alright Sans Bold", sans-serif;
+		color: #444;
+		font-weight: 500;
+	}
 
-    .project-content {
-        margin: 0;
-        padding: 0;
-        line-height: 1.5rem;
-    }
+	.project-content {
+		margin: 0;
+		padding: 0;
+		line-height: 1.5rem;
+	}
 
-    .kunye{
-        display: grid;
-        gap: 1rem;
-    }
+	.project-text :global(p:first-child) {
+		margin-top: 0;
+	}
 
-    .slide-carousel{
-        margin: 50px 35px 0 35px;
-    }
+	.project-text :global(p:last-child) {
+		margin-bottom: 1em;
+	}
 
+	.collaborators {
+		margin-top: 0;
+	}
+
+	.kunye {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.slide-carousel {
+		margin: 50px 35px 0 35px;
+	}
 </style>
-
- 
