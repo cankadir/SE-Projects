@@ -88,7 +88,7 @@
 		flex-direction: column;
 		gap: 0.25rem;
 		width: 100%;
-		max-width: 70rem;
+		max-width: 80rem;
 		padding: 5rem 0;
 		color: #000;
 	}

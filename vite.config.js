@@ -13,11 +13,8 @@ export default defineConfig({
 			}
 		})
 	],
-	optimizeDeps: {
-		include: ['lodash.get', 'lodash.isequal', 'lodash.clonedeep']
-	},
 	server: {
 		// /mnt/c on WSL does not emit reliable fs events; without polling Vite serves stale modules
-		watch: { usePolling: true, interval: 300 }
+		watch: { usePolling: true, interval: 1000 }
 	}
 });

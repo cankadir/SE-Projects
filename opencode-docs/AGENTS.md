@@ -1,35 +1,43 @@
 # Studio 2263 portfolio — project context
 
 Marketing/portfolio site for Studio 2263 (design + data + GIS studio). SvelteKit app, content
-comes from Supabase, deployed at https://www.studio2263.com/.
+comes from Supabase, deployed on Vercel at https://www.studio2263.com/.
 
 ## Stack
 
 | Thing | Version | Note |
 | --- | --- | --- |
-| Node | 22.x (engines, `engine-strict=true` in `.npmrc`) | Kit 3 needs >= 22.17 |
+| Node | 22.x (engines, `engine-strict=true` in `.npmrc`) | Kit 3 needs >= 22.17; native `fetch`/`WebSocket` |
 | SvelteKit | 3.1.x | config lives in `vite.config.js`, not `svelte.config.js` |
 | Vite | 8.x | Kit 3 imports `parseSync` from Vite 8 — Vite 6/7 will not boot |
 | vite-plugin-svelte | 7.x | plugin 6 does not support Vite 8 |
-| Svelte | 5.57+ | |
+| Svelte | 5.57+ | legacy component API kept (see ADR-005) |
 | TypeScript | 6.x | only for `svelte-check` / editor; app code is plain JS |
-| Supabase JS | 2.x | content table + storage bucket |
+| Supabase JS | 2.x | content table + public storage bucket |
+| marked | 13.x | project body Markdown |
+
+Runtime deps are only `@supabase/supabase-js` and `marked`.
 
 ## Layout
 
-- `src/routes/+layout.server.js` — loads all projects from Supabase table `2263 website content`,
-  ordered by `code`, returns `{ projects }` to every page.
-- `src/routes/+page.svelte` — intro text, project card grid, and work-type/topic filter buttons.
+- `src/routes/+layout.server.js` — loads the **listing fields only**
+  (`name, short_url, code, work_types, topics`) from Supabase table `2263 website content`,
+  ordered by `code`, returns `{ projects }` to every page. Deliberately excludes `text` and the
+  metadata columns so the homepage does not ship every project's prose.
+- `src/routes/+page.svelte` — intro text, project card grid, work-type/topic filter buttons.
   Filtering is client-side **ranking**, not filtering: projects with more selected terms float up,
   ties keep the Supabase order (`code`). Cards are a keyed each with `animate:flip`.
-- `src/routes/projects/[id]/+page.server.js` — finds project by `short_url`, renders markdown
-  (`marked`), lists images from storage folder `website_images/<id>`.
-- `src/routes/projects/[id]/+page.svelte` — project page + carousel.
+- `src/routes/projects/[id]/+page.server.js` — fetches the full row for one project by `short_url`
+  (`select('*')`) plus the storage listing, in parallel; renders Markdown with `marked`
+  (`breaks: true`, links get `target="_blank"`).
+- `src/routes/projects/[id]/+page.svelte` — project page: metadata block, Markdown body, carousel.
 - `src/routes/about/+page.svelte` — static about page.
-- `src/lib/supabaseClient.js` — `createSupabase(fetch)`; adds `ws` transport for realtime on server.
+- `src/lib/supabaseClient.js` — `createSupabase(fetch)`; no realtime transport needed.
+- `src/lib/storage.js` — `storageUrl(path)` for the public bucket, built from
+  `PUBLIC_SUPABASE_URL` (single source, no hardcoded project ref).
 - `src/lib/components/component_*.svelte` — navbar, footer, cards, slider, carousel image.
 - `src/env.js` — declares the two public env vars.
-- `src/routes/styles.css` — global styles, imported in `+layout.svelte`.
+- `src/routes/styles.css` — global shell, tokens, fonts, base element defaults.
 
 ## Decisions
 
@@ -62,16 +70,19 @@ so they behave like the old `$env/static/public` and are inlined at build time.
 and in the host's environment variables in production. With `static: true` the values must be
 present at build time; drop that flag if a var should be read at runtime instead.
 
+Adding a variable: put it in `.env` and in Vercel, add it to `src/env.js`, import from
+`$app/env/public` (or `$app/env/private` in `*.server.js` only), restart the dev server.
+
 ### ADR-004 — `#lib` subpath imports
 
 Kit 3 no longer generates `$lib`; it uses Node subpath imports declared in `package.json`:
 `"#lib/*": "./src/lib/*"`. Imports therefore look like `#lib/components/component_navbar.svelte`
-and `#lib/supabaseClient.js` (extension required).
+and `#lib/storage.js` (extension required).
 
 ### ADR-005 — legacy component API kept
 
 `svelte.config`'s `compilerOptions.compatibility.componentApi: 4` was preserved in the Vite plugin,
-so `export let` props and `on:load` handlers in `component_cards.svelte` keep working.
+so `export let` props and `on:load` handlers in the components keep working.
 Migrating components to runes is optional, not required.
 
 ### ADR-006 — homepage top content matches Figma `2390:526`
@@ -79,15 +90,15 @@ Migrating components to runes is optional, not required.
 Source of truth: Figma file `UpKdAED2xweCJm52m9zog2`, frame "top content" (1103 x 435).
 Applied on `src/routes/+page.svelte`:
 
-- title 40px (2.5rem) bold, intro copy 20px (1.25rem) at line-height 1.5, section heading 24px
-  (1.5rem) bold, filter text 20px — all rem, 16px root default.
-- text column capped at 65rem with 0.625rem (10px) padding, 0.25rem gaps between blocks.
-- rem scaling ladder in `styles.css`: root 85% by default, 70% at <= 1200px, 65% at <= 750px.
+- design px at 100% root: title 40, heading 24, intro copy and filter text 20. All are rem
+  (2.5 / 1.5 / 1.25) so they scale with the root ladder below.
+- text column capped at **80rem** (raised from 65 -> 70 -> 80) with 0.625rem padding, 0.25rem gaps.
+- rem scaling ladder in `styles.css`: root **85%** by default, 70% at <= 1200px, 65% at <= 750px.
   All type, spacing and container widths are rem so they follow it; media query breakpoints and
-  1px/3px hairlines stay px. Tried 90% as the base, but 85% reads better at desktop widths.
+  1px/3px hairlines stay px. There is no 1400px step — 100%/85%/90% were all tried, 85% won.
 - filter items are inline text, separated by `•`; active item is bold **#FF7300**; hover turns
-  #FF7300. Design uses a dedicated orange for interaction — do not swap in `--orange` (#ED8206),
-  which belongs to the card tint.
+  #FF7300 (and bolds — deliberate, see ADR-009). Design uses an interaction orange distinct from
+  `--orange` (#ED8206), which belongs to the card tint.
 - fonts: the project registers separate families (`Alright Sans Regular`, `Alright Sans Bold`,
   `Alright Sans Black`), so bold means switching family, not `font-weight: 700`.
   `font-family: "Alright Sans"` does not exist and fell back to sans-serif.
@@ -97,7 +108,7 @@ Applied on `src/routes/+page.svelte`:
 Figma `20:16` is the metadata text layer (412 x 253) beside the project body. Applied to
 `.kunye` in `src/routes/projects/[id]/+page.svelte`:
 
-- 16px, line-height 1.5, black; bold labels via the `Alright Sans Bold` family, values regular.
+- 16px (1rem), line-height 1.5, black; bold labels via `Alright Sans Bold`, values regular.
 - 0.5rem (8px) between lines, none after the last.
 - Lines: Client, Year, Project Scope, Work types, Topics, Link. Work types/Topics come from the
   Supabase arrays joined with ` • `; Link is underlined and inherits black.
@@ -113,13 +124,13 @@ Figma `20:16` is the metadata text layer (412 x 253) beside the project body. Ap
 opens in a new tab. Keying on `<a href="` is safe because marked only emits anchors in that exact
 shape (verified for inline, titled, bare-URL and angle-bracket links).
 
-- Single Enter in Supabase → `<br>` (visible line break inside one paragraph). 12 of 19 rows
-  originally relied on this, so it fixed old content without touching the database.
-- Blank line → separate `<p>` with 1.25rem spacing. Use this when the copy is really paragraphs;
-  `mjd` has since been edited to blank lines and renders 3 `<p>`.
+- Single Enter in Supabase → `<br>` (line break inside one paragraph). Kept for legacy rows; the
+  content has since been converted, 12 of 19 rows now use blank lines.
+- Blank line → separate `<p>` with 1.25rem spacing. This is the preferred authoring style.
 - Authoring stays standard Markdown: links, bold, italic, lists, `##`/`###` headings all render.
 - Styling lives in `.project-text :global(...)` in the project page, because the HTML is injected
   with `{@html}` and never receives Svelte's scope class.
+- The Collaborators line (11 of 19 rows) sits 1.25rem below the body, matching paragraph spacing.
 - `+page.server.js` starts with `// @ts-nocheck`: marked's types return `string | Promise<string>`
   even with `async: false`, and the project does not want type ceremony.
 
@@ -133,26 +144,40 @@ classes live in the page's own `<style>`.
   `!important`s.
 - `h1, h2, p` no longer set `color` globally; `html, body` already sets `--text-color` and children
   inherit. That lets a page set one colour on a wrapper and have headings follow.
-- The homepage now sets colour once (`.title-content { color: #000 }`), size/line-height once
+- The homepage sets colour once (`.title-content { color: #000 }`), size/line-height once
   (`#explore { font-size: 1.25rem; line-height: 1.5 }`), and both buttons share one reset rule.
-  `font-size`/`font-family` come from `input, button` in the global sheet, so the page no longer
-  repeats them.
+  `font-size`/`font-family` come from `input, button` in the global sheet.
 - Removed dead code: `.visually-hidden`, and `.card-slot { display: block }` (divs are block).
 - Filter buttons switch to the Bold family on **hover** as well as when selected. This reflows the
   row slightly; it is the designer's intent, not a bug. Do not "fix" it.
 
+### ADR-010 — data fetching and dependency cleanup
+
+- The layout query was slimmed to listing fields; the project route fetches its own full row.
+  Homepage HTML dropped from ~55 KB to ~27 KB and `/__data.json` from 29 KB to 3.2 KB, because
+  project prose is no longer serialized into every page.
+- `src/lib/storage.js` replaced two hardcoded copies of the Supabase project URL.
+- Removed unused packages: `@fontsource/fira-mono`, `@fontsource-variable/source-sans-3`,
+  `@neoconfetti/svelte`, `@sveltejs/adapter-static`, `rollup` (transitive via adapter-vercel) and
+  `ws`. The `ws` realtime transport branch was removed too; Node 22 has native `WebSocket` and the
+  app never opens a realtime channel.
+- `adapter-auto` stays, with `adapter-vercel` installed for the Vercel deploy.
+- Favicon replaced with `S_white_bg.png` (49 x 49 — small; export 512px from `S.svg` if it looks
+  soft on retina).
+
 ## Conventions
 
-- Plain JS, no TS in app code. `jsconfig.json` extends `$app/tsconfig`; `checkJs` is on but Svelte
-  files use `// @ts-nocheck` where Supabase data shapes are loose.
+- Plain JS, no TS in app code. `jsconfig.json` extends `$app/tsconfig`; `checkJs` is on, and files
+  with loose external types (Supabase rows, marked output, `storageUrl`) start with
+  `// @ts-nocheck`.
 - Component filenames: `component_<name>.svelte`, snake_case.
-- Supabase columns come back snake_case (`short_url`, `code`, `text`, `name`) — do not rename.
+- Supabase columns are snake_case except `Collaborators` (capital C, legacy) — do not rename.
 - Project order is owned by Supabase: `+layout.server.js` orders by `code`. Any client-side sort
   must be a stable rank on top of that array and must fall back to the given order for ties.
 - `work_types` / `topics` labels are free text in the DB and not normalised — e.g. "Public Data"
   vs "Public Data Platforms", "UX / UI Design" vs "UX & UI Design" show up as separate filters.
-- Storage images: `.../2263_websiteImgs/website_images/<short_url>/cover.jpg` for cards,
-  sibling files for the project gallery. `STORAGE_BASE` is hardcoded in the project route.
+- Storage images: `2263_websiteImgs/website_images/<short_url>/cover.jpg` for cards, sibling files
+  for the project gallery. Always build URLs with `storageUrl()` from `#lib/storage.js`.
 
 ## Known noise / gotchas
 
@@ -164,13 +189,25 @@ classes live in the page's own `<style>`.
   Cloudflare edge (`server: cloudflare`, `Domain=supabase.co`, `SameSite=None`) on every storage
   response. The site is on Vercel, so it is a third-party cookie and browsers reject it. One
   message per image (≈19 covers on the homepage). Harmless, not fixable in app code.
-- `ws` typings do not match supabase's `WebSocketLikeConstructor`; the transport assignment in
-  `supabaseClient.js` is cast to `any` on purpose.
-- `optimizeDeps.include` lists `lodash.get`, `lodash.isequal`, `lodash.clonedeep` (transitive via
-  svelte-carousel). Keep unless the carousel is replaced.
+- `lodash.get`, `lodash.isequal`, `lodash.clonedeep` appear in `npm ls` but are **not** project
+  deps: they come from `svelte-carousel` -> `easy-reactive`. Nothing in `src` imports them, and
+  `optimizeDeps.include` no longer references them, so Vite resolves them on its own. Removing the
+  carousel is what would remove them.
+- Favicon is linked as `/favicon.png` (absolute) in `src/app.html`, not
+  `%sveltekit.assets%/favicon.png`. With relative asset paths Kit emitted `./favicon.png` at the
+  root and `../favicon.png` on nested routes; absolute is depth-proof. The build copies
+  `static/favicon.png` into the client output.
 - Dev server on this WSL `/mnt/c` checkout takes ~35 s to become ready. Not a hang.
 - File watching on `/mnt/c` is unreliable: edits land on disk but Vite keeps serving stale modules.
-  `vite.config.js` now sets `server.watch.usePolling: true` (300 ms). Verified: edit -> page
-  updates, revert -> page reverts, no server restart needed. A clone inside the WSL filesystem
-  would not need polling.
-- Vite 8 uses rolldown; build scripts and adapters changed but this app only uses adapter-auto.
+  `vite.config.js` sets `server.watch.usePolling: true, interval: 1000`. 300 ms worked but kept a
+  Vite process at ~40% CPU; 1 s idles around 19% and still reloads within a second. A clone inside
+  the WSL filesystem would not need polling at all.
+- Run **one** dev server. If 5173 is taken, Vite silently starts on 5174; two polling watchers on
+  the same `/mnt/c` tree thrash CPU/IO and requests stall (observed 25 s timeouts and a dead
+  process). Check with `ss -ltn | grep 517`. Each Vite 8 process also sits around 650 MB RSS.
+- `.env` uses CRLF and spaces around `=`. Vite's `loadEnv` copes (verified), but normalise before
+  using `vercel env pull` or dotenv-based scripts.
+- dead weight in `static/`: 5.4 MB of unused `SourceSans3-*.ttf`, plus unused Alright Sans
+  Light/Medium/Thin (512 KB). Total `static/` is 6.8 MB. Deleting them only affects deploy size;
+  git history keeps them.
+- Vite 8 uses rolldown; this app still deploys through `adapter-auto` -> Vercel.
