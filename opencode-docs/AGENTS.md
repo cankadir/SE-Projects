@@ -82,9 +82,9 @@ Applied on `src/routes/+page.svelte`:
 - title 40px (2.5rem) bold, intro copy 20px (1.25rem) at line-height 1.5, section heading 24px
   (1.5rem) bold, filter text 20px — all rem, 16px root default.
 - text column capped at 65rem with 0.625rem (10px) padding, 0.25rem gaps between blocks.
-- rem scaling ladder in `styles.css`: root 100%, 85% at <= 1400px, 70% at <= 1200px.
-  All type, spacing and container widths are rem so they follow it; media query breakpoints and
-  1px/3px hairlines stay px.
+- rem scaling ladder in `styles.css`: root 100%, 90% at <= 1400px, 70% at <= 1200px, 65% at
+  <= 750px. All type, spacing and container widths are rem so they follow it; media query
+  breakpoints and 1px/3px hairlines stay px.
 - filter items are inline text, separated by `•`; active item is bold **#FF7300**; hover turns
   #FF7300. Design uses a dedicated orange for interaction — do not swap in `--orange` (#ED8206),
   which belongs to the card tint.
@@ -122,6 +122,24 @@ shape (verified for inline, titled, bare-URL and angle-bracket links).
   with `{@html}` and never receives Svelte's scope class.
 - `+page.server.js` starts with `// @ts-nocheck`: marked's types return `string | Promise<string>`
   even with `async: false`, and the project does not want type ceremony.
+
+### ADR-009 — CSS ownership
+
+`styles.css` owns the shell, tokens, fonts and base element defaults only. Page-specific layout
+classes live in the page's own `<style>`.
+
+- Global rules must not target page classes. `.title-content` and `.projects-grid` (plus their
+  760px overrides) moved out of `styles.css` into `+page.svelte`; this also removed two
+  `!important`s.
+- `h1, h2, p` no longer set `color` globally; `html, body` already sets `--text-color` and children
+  inherit. That lets a page set one colour on a wrapper and have headings follow.
+- The homepage now sets colour once (`.title-content { color: #000 }`), size/line-height once
+  (`#explore { font-size: 1.25rem; line-height: 1.5 }`), and both buttons share one reset rule.
+  `font-size`/`font-family` come from `input, button` in the global sheet, so the page no longer
+  repeats them.
+- Removed dead code: `.visually-hidden`, and `.card-slot { display: block }` (divs are block).
+- Filter buttons switch to the Bold family on **hover** as well as when selected. This reflows the
+  row slightly; it is the designer's intent, not a bug. Do not "fix" it.
 
 ## Conventions
 

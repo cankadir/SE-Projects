@@ -43,7 +43,7 @@
 		<h2>Explore project samples, select a category below</h2>
 
 		<div class="selectors">
-			<p class="filter">Work Type:</p>
+			<span class="filter">Work Type:</span>
 			{#each workTypes as workType, i}
 				<button
 					class="filter-selection"
@@ -55,7 +55,7 @@
 		</div>
 
 		<div class="selectors">
-			<p class="filter">Topics:</p>
+			<span class="filter">Topics:</span>
 			{#each topics as topic, i}
 				<button
 					class="filter-selection"
@@ -84,52 +84,43 @@
 
 <style>
 	.title-content {
-		padding: 5rem 0;
-		width: 100%;
-		max-width: 70rem;
 		display: flex;
 		flex-direction: column;
 		gap: 0.25rem;
+		width: 100%;
+		max-width: 70rem;
+		padding: 5rem 0;
+		color: #000;
 	}
 
-	h1 {
-		margin: 0;
-		color: #000;
-		font-family: 'Alright Sans Bold', sans-serif;
-		font-size: 2.5rem;
-		font-weight: 400;
-		line-height: normal;
+	.title-content > p,
+	#explore {
+		box-sizing: border-box;
+		padding: 0.625rem;
 	}
 
 	.title-content > p {
 		margin: 0;
-		padding: 0.625rem;
-		box-sizing: border-box;
-		font-family: 'Alright Sans Regular', sans-serif;
 		font-size: 1.25rem;
-		line-height: 1.5;
-		color: #000;
+	}
+
+	h1 {
+		margin: 0;
+		font-family: 'Alright Sans Bold', sans-serif;
+		font-size: 2.5rem;
+		line-height: normal;
 	}
 
 	h2 {
 		margin: 0;
-		color: #000;
 		font-family: 'Alright Sans Bold', sans-serif;
 		font-size: 1.5rem;
-		font-weight: 400;
 		line-height: 1.5;
 	}
 
 	#explore {
-		padding: 0.625rem;
-		box-sizing: border-box;
-	}
-
-	.selectors {
-		font-family: 'Alright Sans Regular', sans-serif;
 		font-size: 1.25rem;
 		line-height: 1.5;
-		color: #000;
 	}
 
 	.selectors + .selectors {
@@ -137,31 +128,25 @@
 	}
 
 	.filter {
-		display: inline;
-		margin: 0 0.25rem 0 0;
+		margin-right: 0.25rem;
 		font-family: 'Alright Sans Bold', sans-serif;
-		font-size: 1.25rem;
-		font-weight: 400;
 	}
 
-	.filter-selection {
+	.filter-selection,
+	.filter-clear {
 		margin: 0;
 		padding: 0;
 		border: none;
 		background: none;
-		font-family: 'Alright Sans Regular', sans-serif;
-		font-size: 1.25rem;
-		line-height: 1.5;
-		color: #000;
+		color: inherit;
 		cursor: pointer;
+	}
+
+	.filter-selection {
 		transition: color 0.15s ease;
 	}
 
-	.filter-selection:hover {
-		color: #ff7300;
-		font-family: 'Alright Sans Bold', sans-serif;
-	}
-
+	.filter-selection:hover,
 	.filter-selection[aria-pressed='true'] {
 		color: #ff7300;
 		font-family: 'Alright Sans Bold', sans-serif;
@@ -169,20 +154,28 @@
 
 	.filter-clear {
 		margin-top: 0.75rem;
-		padding: 0;
-		border: none;
-		background: none;
-		font-family: 'Alright Sans Regular', sans-serif;
 		font-size: 1rem;
 		color: #ff7300;
-		cursor: pointer;
 	}
 
 	.filter-clear:hover {
 		text-decoration: underline;
 	}
 
-	.card-slot {
-		display: block;
+	.projects-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.5rem;
+	}
+
+	@media (max-width: 760px) {
+		.title-content {
+			padding: 1.5rem 0;
+		}
+
+		.projects-grid {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>
+

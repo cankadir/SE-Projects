@@ -33,10 +33,10 @@
   content: 40/24/20px type, 68.9rem column, inline text filters, #FF7300 hover/active, bold via the
   `Alright Sans Bold` family. Spacing, type sizes and states follow the frame; filter order stays
   alphabetical from the data, and the "Clear selection" control is ours (not in the frame).
-- Responsive sizing: root font-size ladder 100% / 85% (<= 1400px) / 70% (<= 1200px), with
-  `.title-content` capped at 65rem. Converted remaining px type, margins and container widths
-  (navbar, project page, slider, about, `.app` shell) to rem so they scale with it; hairlines and
-  media query breakpoints stay px.
+- Responsive sizing: root font-size ladder 100% / 90% (<= 1400px) / 70% (<= 1200px) / 65%
+  (<= 750px), with `.title-content` capped at 65rem. Converted remaining px type, margins and
+  container widths (navbar, project page, slider, about, `.app` shell) to rem so they scale with
+  it; hairlines and media query breakpoints stay px.
 - Project carousel arrows restyled: no dark pill, transparent background, grey chevron
   (`hsl(0, 0%, 25%)`) that goes black on hover.
 - Project page body paragraphs (markdown output and collaborators) and metadata lines set to 1rem.
@@ -54,6 +54,11 @@
   `svelte-check` needed `// @ts-nocheck` on the server file (marked types return
   `string | Promise<string>`). `mjd` has since been edited to blank-line paragraphs and renders 3
   `<p>` with no `<br>`.
+- CSS cleanup: moved `.title-content` and `.projects-grid` out of the global sheet into the
+  homepage (with their 760px rules, dropping two `!important`s), removed `color` from the global
+  `h1, h2, p`, collapsed five repeated `#000`, four `font-family`, four `font-size` and three
+  `line-height` declarations, merged the two button resets, changed the filter labels from `<p>` to
+  `<span>`, and deleted unused `.visually-hidden` and `.card-slot`. `styles.css` 156 -> 123 lines.
 - Simplified the homepage script at the user's request: dropped JSDoc type annotations (kept
   `// @ts-nocheck`), collapsed `rank`/`terms` to one-liners, and deduped a project's terms so a
   label present in both `work_types` and `topics` counts once. Did **not** add lodash — `uniqBy`

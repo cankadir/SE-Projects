@@ -12,13 +12,19 @@ html {
 /* everything sized in rem scales with these breakpoints */
 @media (max-width: 1400px) {
 	html {
-		font-size: 85%;
+		font-size: 90%;
 	}
 }
 
 @media (max-width: 1200px) {
 	html {
 		font-size: 70%;
+	}
+}
+
+@media (max-width: 750px) {
+	html {
+		font-size: 65%;
 	}
 }
 
@@ -72,18 +78,6 @@ html,body{
 	}
 }
 
-/* if the screen is less than 760px */
-@media (max-width: 760px){
-	.title-content{
-		width: 100% !important;
-		padding: 1.5rem 0 !important;
-	}
-
-	.projects-grid {
-		grid-template-columns: 1fr !important;
-	}
-}
-
 @media screen and (max-width: 480px){
 	.app {
 		margin: 0 0.625rem;
@@ -105,7 +99,6 @@ h1,
 h2,
 p {
 	font-weight: 400;
-	color: var(--text-color);
 }
 
 p {
@@ -122,12 +115,6 @@ a:hover {
 	text-decoration: underline;
 }
 
-.projects-grid {
-	display: grid;
-	grid-template-columns: 3fr 3fr 3fr;
-	grid-gap: 1.5rem;
-}
-
 input,
 button {
 	font-size: inherit;
@@ -136,19 +123,6 @@ button {
 
 button:focus:not(:focus-visible) {
 	outline: none;
-}
-
-
-.visually-hidden {
-	border: 0;
-	clip: rect(0 0 0 0);
-	height: auto;
-	margin: 0;
-	overflow: hidden;
-	padding: 0;
-	position: absolute;
-	width: 1px;
-	white-space: nowrap;
 }
 
 .sc-carousel-dots__container{
