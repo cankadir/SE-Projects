@@ -38,7 +38,7 @@
 	}
 
 	.slide-wrap:not(.is-loaded) {
-		min-height: 640px;
+		min-height: 40rem;
 	}
 
 	.slide-loader {
@@ -70,7 +70,7 @@
 		object-fit: contain;
 		width: 100%;
 		height: 100%;
-		max-height: 640px !important;
+		max-height: 40rem !important;
 		opacity: 0;
 		transition: opacity 0.25s ease;
 	}

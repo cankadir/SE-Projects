@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { createSupabase } from '$lib/supabaseClient';
+import { createSupabase } from '#lib/supabaseClient.js';
 
 export async function load({ fetch }) {
 	const supabase = await createSupabase(fetch);

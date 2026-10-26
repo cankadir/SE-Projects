@@ -2,7 +2,7 @@
 <nav class="navbar">
   <div class="navbar-content">
       <a href="../" class="title button">
-        <img src="/images/logo.svg" alt="studio logo" height="30px" width="auto">
+        <img src="/images/logo.svg" alt="studio logo">
       </a>
       <a href='../about' class="about button"><strong>About</strong></a>
   </div>
@@ -12,19 +12,24 @@
 <style>
 
   .navbar {
-    padding: 0 25px;
+    padding: 0 1.5625rem;
   }
 
   .navbar-content{
-    height: 55px;
+    height: 3.4375rem;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid var(--text-color);
-    padding-bottom: 4px;
+    padding-bottom: 0.25rem;
   }
 
   .title {
     font-size: 1.5rem;
+  }
+
+  .title img {
+    height: 1.875rem;
+    width: auto;
   }
 
   .about{

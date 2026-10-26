@@ -1,8 +1,15 @@
+// @ts-nocheck
 import { marked } from 'marked';
-import { createSupabase } from '$lib/supabaseClient';
+import { createSupabase } from '#lib/supabaseClient.js';
 
 const STORAGE_BASE =
 	'https://mhdoyvmbgsrbsifouhxo.supabase.co/storage/v1/object/public/2263_websiteImgs/website_images';
+
+// marked always emits links as `<a href="...">`, so this is safe to key on
+const markdown = (text) =>
+	marked
+		.parse(text, { breaks: true })
+		.replaceAll('<a href="', '<a target="_blank" rel="noreferrer" href="');
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ fetch, params, parent }) {
@@ -24,7 +31,7 @@ export async function load({ fetch, params, parent }) {
 	return {
 		project: {
 			...match,
-			html: marked.parse(match.text ?? '')
+			html: markdown(match.text ?? '')
 		},
 		imageLinks
 	};

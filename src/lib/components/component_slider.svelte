@@ -1,7 +1,7 @@
 <script>
 	// @ts-nocheck
 	import { onMount } from 'svelte';
-	import CarouselImage from '$lib/components/component_carousel_image.svelte';
+	import CarouselImage from '#lib/components/component_carousel_image.svelte';
 
 	export let images = [];
 
@@ -51,7 +51,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		min-height: 640px;
+		min-height: 40rem;
 		background-color: hsl(0, 0%, 90%);
 	}
 
@@ -75,13 +75,20 @@
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
-		background-color: rgba(0, 0, 0, 0.5);
-		color: white;
+		background: none;
 		border: none;
+		color: hsl(0, 0%, 25%);
 		cursor: pointer;
-		padding: 10px;
-		font-size: 25px;
+		padding: 0.625rem;
+		font-size: 1.5625rem;
+		line-height: 1;
 		z-index: 100;
+		transition: color 0.15s ease;
+	}
+
+	.prev-button:hover,
+	.next-button:hover {
+		color: #000;
 	}
 
 	.prev-button {
