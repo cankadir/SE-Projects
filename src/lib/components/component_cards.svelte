@@ -1,6 +1,7 @@
 <script>
 // @ts-nocheck
 	import { onMount } from 'svelte';
+	import { storageUrl } from '#lib/storage.js';
 
 	export let project;
 
@@ -8,7 +9,7 @@
 	let loaded = false;
 	let imgEl;
 
-	const src = `https://mhdoyvmbgsrbsifouhxo.supabase.co/storage/v1/object/public/2263_websiteImgs/website_images/${project['short_url']}/cover.jpg`;
+	const src = storageUrl(`website_images/${project.short_url}/cover.jpg`);
 
 	onMount(() => {
 		mounted = true;

@@ -82,9 +82,9 @@ Applied on `src/routes/+page.svelte`:
 - title 40px (2.5rem) bold, intro copy 20px (1.25rem) at line-height 1.5, section heading 24px
   (1.5rem) bold, filter text 20px — all rem, 16px root default.
 - text column capped at 65rem with 0.625rem (10px) padding, 0.25rem gaps between blocks.
-- rem scaling ladder in `styles.css`: root 100%, 90% at <= 1400px, 70% at <= 1200px, 65% at
-  <= 750px. All type, spacing and container widths are rem so they follow it; media query
-  breakpoints and 1px/3px hairlines stay px.
+- rem scaling ladder in `styles.css`: root 85% by default, 70% at <= 1200px, 65% at <= 750px.
+  All type, spacing and container widths are rem so they follow it; media query breakpoints and
+  1px/3px hairlines stay px. Tried 90% as the base, but 85% reads better at desktop widths.
 - filter items are inline text, separated by `•`; active item is bold **#FF7300**; hover turns
   #FF7300. Design uses a dedicated orange for interaction — do not swap in `--orange` (#ED8206),
   which belongs to the card tint.
@@ -160,6 +160,10 @@ classes live in the page's own `<style>`.
   prints a warning on every start. Harmless.
 - `#lib` imports need the file extension (`#lib/supabaseClient.js`). Without it Vite resolves but
   TypeScript cannot, and `npm run check` reports `Cannot find module`.
+- Console noise: `Cookie "__cf_bm" ... rejected for invalid domain` comes from Supabase's
+  Cloudflare edge (`server: cloudflare`, `Domain=supabase.co`, `SameSite=None`) on every storage
+  response. The site is on Vercel, so it is a third-party cookie and browsers reject it. One
+  message per image (≈19 covers on the homepage). Harmless, not fixable in app code.
 - `ws` typings do not match supabase's `WebSocketLikeConstructor`; the transport assignment in
   `supabaseClient.js` is cast to `any` on purpose.
 - `optimizeDeps.include` lists `lodash.get`, `lodash.isequal`, `lodash.clonedeep` (transitive via

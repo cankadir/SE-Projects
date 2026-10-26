@@ -33,13 +33,17 @@
   content: 40/24/20px type, 68.9rem column, inline text filters, #FF7300 hover/active, bold via the
   `Alright Sans Bold` family. Spacing, type sizes and states follow the frame; filter order stays
   alphabetical from the data, and the "Clear selection" control is ours (not in the frame).
-- Responsive sizing: root font-size ladder 100% / 90% (<= 1400px) / 70% (<= 1200px) / 65%
-  (<= 750px), with `.title-content` capped at 65rem. Converted remaining px type, margins and
-  container widths (navbar, project page, slider, about, `.app` shell) to rem so they scale with
-  it; hairlines and media query breakpoints stay px.
+- Responsive sizing: root font-size ladder 85% / 70% (<= 1200px) / 65% (<= 750px), with
+  `.title-content` capped at 65rem. Converted remaining px type, margins and container widths
+  (navbar, project page, slider, about, `.app` shell) to rem so they scale with it; hairlines and
+  media query breakpoints stay px. Base dropped from 100% to 90% (the 1400px step became identical
+  and was removed), then to 85% after comparing on screen.
+- Favicon replaced with `S_white_bg.png` (49x49) from the Dropbox logo folder.
 - Project carousel arrows restyled: no dark pill, transparent background, grey chevron
   (`hsl(0, 0%, 25%)`) that goes black on hover.
 - Project page body paragraphs (markdown output and collaborators) and metadata lines set to 1rem.
+- Collaborators line now sits 1.25rem below the project body (matches the markdown paragraph gap),
+  instead of butting against the last paragraph.
 - Project metadata column rebuilt to Figma `20:16`: 16px/lh1.5 black text, bold labels, 8px line
   gaps, added Work types and Topics (arrays joined by ` • `), black underlined link. Each line is
   guarded by `filled()`/`list()` so empty columns render nothing; verified on riverkeeper (all

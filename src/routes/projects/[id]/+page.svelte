@@ -14,7 +14,7 @@
 		<h2 class="project-title">{data.project.name}</h2>
 
 		<div class="project-table">
-			<div class="project-col">
+			<div>
 				<div class="kunye">
 					{#if filled(data.project.client)}
 						<p><span class="label">Client:</span> {data.project.client}</p>
@@ -40,7 +40,7 @@
 				</div>
 			</div>
 
-			<div class="project-col">
+			<div>
 				<div class="project-content project-text">{@html data.project.html}</div>
 				{#if data.project.Collaborators}
 					<p class="project-content collaborators">Collaborators: {data.project.Collaborators}</p>
@@ -174,7 +174,7 @@
 	}
 
 	.collaborators {
-		margin-top: 0;
+		margin-top: 1.25rem;
 	}
 
 	.kunye {
