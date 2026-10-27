@@ -80,6 +80,12 @@
   27 ms). Raised the poll interval 300 ms -> 1000 ms (idle CPU ~19% instead of ~40%, HMR still
   verified with a probe edit).
 
+- Vercel still showed the Svelte icon after the favicon swap. Server side was proven correct
+  (live `/favicon.png` md5 == local file, one `<link>` tag, apex redirects to www), so the cause was
+  the browser's icon cache keyed by the unchanged URL. Renamed to `/favicon-2263.png` to bust it,
+  added `static/favicon.ico` (48/32/16, since `/favicon.ico` was 404), kept `/favicon.png` for old
+  cached HTML. `VERCEL=1 npm run build` copies all three into `.vercel/output/static`.
+
 **Final state**
 - `npm run check`: 0 errors, 0 warnings.
 - Verified 200 + rendered content on `/`, `/about`, `/projects/mjd`, `/projects/riverkeeper`,

@@ -193,10 +193,11 @@ classes live in the page's own `<style>`.
   deps: they come from `svelte-carousel` -> `easy-reactive`. Nothing in `src` imports them, and
   `optimizeDeps.include` no longer references them, so Vite resolves them on its own. Removing the
   carousel is what would remove them.
-- Favicon is linked as `/favicon.png` (absolute) in `src/app.html`, not
-  `%sveltekit.assets%/favicon.png`. With relative asset paths Kit emitted `./favicon.png` at the
-  root and `../favicon.png` on nested routes; absolute is depth-proof. The build copies
-  `static/favicon.png` into the client output.
+- Favicon is `/favicon-2263.png` (absolute) in `src/app.html`, not
+  `%sveltekit.assets%/favicon.png`. Two reasons: relative assets emitted `../favicon.png` on nested
+  routes, and the old `/favicon.png` URL stayed in browser icon caches after the logo changed, so
+  the filename was bumped to force a refetch. `static/favicon.ico` (48/32/16) also exists for tools
+  that ignore `<link>`; `static/favicon.png` is kept only so old cached HTML does not 404.
 - Dev server on this WSL `/mnt/c` checkout takes ~35 s to become ready. Not a hang.
 - File watching on `/mnt/c` is unreliable: edits land on disk but Vite keeps serving stale modules.
   `vite.config.js` sets `server.watch.usePolling: true, interval: 1000`. 300 ms worked but kept a
